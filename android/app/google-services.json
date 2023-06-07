@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "72959749880",
+    "firebase_url": "https://monolearn-241ca-default-rtdb.firebaseio.com",
+    "project_id": "monolearn-241ca",
+    "storage_bucket": "monolearn-241ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72959749880:android:66f04a87de36af0ea1d50d",
+        "android_client_info": {
+          "package_name": "com.codewithmaro.wordie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72959749880-4v8m0b7ha5894pl5p27pagt9ma9o4vhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUgPsBvdfstxflx-r2XPhuT5twIsBD8UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72959749880-4v8m0b7ha5894pl5p27pagt9ma9o4vhr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "72959749880-63nd37e8dce39lqjht0li4mc5k5pfr8i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wordie.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72959749880:android:0204a2a289a7c352a1d50d",
+        "android_client_info": {
+          "package_name": "com.maro.mono_learn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72959749880-t3trhramd4tifj7giguajeq526orbvge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maro.mono_learn",
+            "certificate_hash": "fc8c0dd4145d605448bb2f08fdafc1fa5b9326f0"
+          }
+        },
+        {
+          "client_id": "72959749880-4v8m0b7ha5894pl5p27pagt9ma9o4vhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUgPsBvdfstxflx-r2XPhuT5twIsBD8UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72959749880-4v8m0b7ha5894pl5p27pagt9ma9o4vhr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "72959749880-63nd37e8dce39lqjht0li4mc5k5pfr8i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wordie.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

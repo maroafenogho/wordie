@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>72959749880-klq1p0op2ncmv3t2uh0e0c8uuftbj2u6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.72959749880-klq1p0op2ncmv3t2uh0e0c8uuftbj2u6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>72959749880-m7g4u62kt3ncvqo16rd00l4glg1s4pud.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB8kLMybsW9xHtYUFbAOOYwsn2gPp20qSs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>72959749880</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.codewithmaro.wordie</string>
+	<key>PROJECT_ID</key>
+	<string>monolearn-241ca</string>
+	<key>STORAGE_BUCKET</key>
+	<string>monolearn-241ca.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:72959749880:ios:3feb7ef6f9536738a1d50d</string>
+	<key>DATABASE_URL</key>
+	<string>https://monolearn-241ca-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

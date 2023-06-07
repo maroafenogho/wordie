@@ -1,0 +1,35 @@
+import 'package:go_router/go_router.dart';
+import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
+import 'package:wordie/src/features/game/presentation/screens/home.dart';
+import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
+
+final GoRouter routes =
+    GoRouter(initialLocation: Splashscreen.routeName, routes: [
+  GoRoute(
+    name: 'Splashscreen',
+    path: Splashscreen.routeName,
+    builder: (context, state) => const Splashscreen(),
+  ),
+  GoRoute(
+    name: SignUpScreen.routeName,
+    path: SignUpScreen.routeName,
+    builder: (context, state) => SignUpScreen(),
+  ),
+  GoRoute(
+    name: LoginScreen.routeName,
+    path: LoginScreen.routeName,
+    builder: (context, state) => LoginScreen(),
+  ),
+  GoRoute(
+    name: HomeScreen.routeName,
+    path: HomeScreen.routeName,
+    builder: (context, state) => HomeScreen(),
+  ),
+  GoRoute(
+    name: Wrapper.routeName,
+    path: Wrapper.routeName,
+    builder: (context, state) => Wrapper(),
+  ),
+]);
