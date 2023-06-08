@@ -13,7 +13,7 @@ extension Shuffle on String {
   }
 }
 
-extension Size on double {
+extension SizeB on double {
   SizedBox get vSpace => SizedBox(
         height: this,
       );
