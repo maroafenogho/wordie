@@ -13,6 +13,26 @@ extension Shuffle on String {
   }
 }
 
+extension Greeting on DateTime {
+  String get greeting {
+    if (hour > 16) {
+      return '🌆 Good evening,';
+    } else if (hour > 11) {
+      return '🌞 Good afternoon,';
+    } else if (hour > 4) {
+      return '🌄 Good morning,';
+    } else {
+      return '🌄 Good morning,';
+    }
+  }
+}
+
+extension SeparateName on String {
+  String get firstName {
+    return split(' ')[0];
+  }
+}
+
 extension MyRadius on double {
   Radius get cRadius {
     return Radius.circular(this);

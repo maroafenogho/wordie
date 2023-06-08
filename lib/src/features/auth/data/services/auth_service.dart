@@ -37,6 +37,18 @@ class AuthService {
     }
   }
 
+  Future<bool> logout() async {
+    bool success = false;
+    try {
+      await _firebaseAuth.signOut();
+
+      success = true;
+    } catch (error) {
+      print(error);
+    }
+    return success;
+  }
+
   Future<User?> createUser(
       {required String email,
       required String password,

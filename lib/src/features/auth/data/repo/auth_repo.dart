@@ -22,6 +22,10 @@ class AuthRepo {
     return await _authService.login(email, password);
   }
 
+  Future<bool> logout() async {
+    return _authService.logout();
+  }
+
   Stream<User?> get currentUser {
     return _authService.currentUser;
   }

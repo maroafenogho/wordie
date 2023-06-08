@@ -10,9 +10,18 @@ class AccountScreen extends ConsumerWidget {
     final currentUser = ref.watch(currentUserProvider);
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
-       appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: WordieConstants.backgroundColor,
         leading: Container(),
+      ),
+      body: Column(
+        children: [
+          TextButton(
+              onPressed: () async {
+                await ref.read(asyncLogoutProvider.notifier).logout();
+              },
+              child: Text('Logout'))
+        ],
       ),
     );
   }

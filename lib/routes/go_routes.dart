@@ -2,9 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
-import 'package:wordie/src/features/game/presentation/screens/add_note.dart';
-import 'package:wordie/src/features/game/presentation/screens/edit_note.dart';
-import 'package:wordie/src/features/game/presentation/screens/home.dart';
+import 'package:wordie/src/features/home/presentation/screens/add_note.dart';
+import 'package:wordie/src/features/home/presentation/screens/edit_note.dart';
+import 'package:wordie/src/features/home/presentation/screens/home.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
 
 final GoRouter routes =

@@ -4,8 +4,8 @@ import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:wordie/src/features/game/data/repo/note_repo.dart';
-import 'package:wordie/src/features/game/domain/note.dart';
+import 'package:wordie/src/features/home/data/repo/note_repo.dart';
+import 'package:wordie/src/features/home/domain/note.dart';
 
 final firebaseDbRefProvider = Provider((ref) => FirebaseDatabase.instance);
 
@@ -59,6 +59,39 @@ class AsyncUpdateNoteNotifier extends AsyncNotifier<bool> {
           oldTitle: oldTitle,
           newTitle: newTitle,
           newBody: newBody);
+      return success;
+    });
+    if (state.hasError) {
+      state = AsyncValue.error(state.error!, state.stackTrace!);
+
+      log(state.stackTrace!.toString());
+    }
+    return success;
+  }
+}
+
+final asyncDeleteNoteProvider =
+    AsyncNotifierProvider<AsyncDeleteNoteNotifier, bool>(
+  () => AsyncDeleteNoteNotifier(),
+);
+
+class AsyncDeleteNoteNotifier extends AsyncNotifier<bool> {
+  @override
+  FutureOr<bool> build() {
+    throw UnimplementedError();
+  }
+
+  Future<bool> deleteNote({
+    required String userId,
+    required String oldTitle,
+  }) async {
+    bool success = false;
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      success = await ref.read(notesRepoProvider).deleteNote(
+            userId: userId,
+            oldTitle: oldTitle,
+          );
       return success;
     });
     if (state.hasError) {

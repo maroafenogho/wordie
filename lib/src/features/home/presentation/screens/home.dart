@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/common/constants.dart';
-import 'package:wordie/src/features/game/presentation/controllers/home_controller.dart';
+import 'package:wordie/src/features/home/presentation/controllers/home_controller.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const routeName = '/home_screen';
@@ -27,6 +27,7 @@ class HomeScreen extends ConsumerWidget {
                 topLeft: Radius.circular(40), topRight: Radius.circular(40))),
         child: BottomNavigationBar(
             currentIndex: currentIndex,
+            unselectedItemColor: WordieConstants.backgroundColor2,
             selectedItemColor: WordieConstants.backgroundColor,
             onTap: (index) =>
                 ref.read(currentIndexProvider.notifier).state = index,

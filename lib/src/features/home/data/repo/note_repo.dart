@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/game/data/services/note_service.dart';
-import 'package:wordie/src/features/game/domain/note.dart';
+import 'package:wordie/src/features/home/data/services/note_service.dart';
+import 'package:wordie/src/features/home/domain/note.dart';
 
 class NoteRepo {
   final NoteService _noteService;

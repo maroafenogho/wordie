@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/game/domain/note.dart';
-import 'package:wordie/src/features/game/presentation/controllers/notes_controller.dart';
+import 'package:wordie/src/features/home/domain/note.dart';
+import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
 
 class NoteService {
   Future<bool> createNote(
