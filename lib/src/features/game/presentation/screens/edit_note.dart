@@ -10,13 +10,18 @@ import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/game/presentation/controllers/notes_controller.dart';
 
-class AddNoteScreen extends ConsumerWidget {
-  AddNoteScreen({super.key});
-  static const routeName = 'add_note';
+class EditNoteScreen extends ConsumerWidget {
+  EditNoteScreen({super.key});
+  static const routeName = 'edit_note';
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedNote = ref.watch(selectedNoteProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      titleController.text = selectedNote.title;
+      bodyController.text = selectedNote.body;
+    });
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
       appBar: AppBar(
@@ -27,7 +32,7 @@ class AddNoteScreen extends ConsumerWidget {
             },
             child: const Icon(Icons.arrow_back_ios_new)),
         title: const Text(
-          'Add Note',
+          'Edit Note',
           style: WordieTypography.h4,
         ),
       ),
@@ -55,35 +60,36 @@ class AddNoteScreen extends ConsumerWidget {
             ),
             30.0.vSpace,
             WordieButton(
-              isLoading: ref.watch(asyncAddNoteProvider).isLoading,
+              isLoading: ref.watch(asyncUpdateProvider).isLoading,
               onPressed: () async {
                 if (titleController.text.isNotEmpty &&
                     bodyController.text.isNotEmpty) {
                   bool success = await ref
-                      .read(asyncAddNoteProvider.notifier)
-                      .createNote(
+                      .read(asyncUpdateProvider.notifier)
+                      .updateNote(
                           userId: ref.watch(currentUserProvider).value!.userId,
-                          noteTitle: titleController.text.trim(),
-                          noteBody: bodyController.text.trim());
+                          oldTitle: selectedNote.title,
+                          newTitle: titleController.text.trim(),
+                          newBody: bodyController.text.trim());
 
                   if (success) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Note saved successfully'),
+                      content: Text('Note updated successfully'),
                       dismissDirection: DismissDirection.up,
                       backgroundColor: WordieConstants.mainColor,
                     ));
                     context.pop();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          ref.watch(asyncAddNoteProvider).error.toString()),
+                      content:
+                          Text(ref.watch(asyncUpdateProvider).error.toString()),
                       dismissDirection: DismissDirection.up,
                       backgroundColor: WordieConstants.mainColor,
                     ));
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Enter title and body to save note'),
+                    content: Text('Enter title and body to update note'),
                     dismissDirection: DismissDirection.up,
                     backgroundColor: WordieConstants.mainColor,
                   ));

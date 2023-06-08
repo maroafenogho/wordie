@@ -7,6 +7,7 @@ import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/game/presentation/controllers/notes_controller.dart';
 import 'package:wordie/src/features/game/presentation/screens/add_note.dart';
+import 'package:wordie/src/features/game/presentation/screens/edit_note.dart';
 
 class Dashboard extends ConsumerWidget {
   const Dashboard({super.key});
@@ -22,23 +23,106 @@ class Dashboard extends ConsumerWidget {
           backgroundColor: WordieConstants.backgroundColor,
         ),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            currentUser.value!.fullName!,
-            style: WordieTypography.bodyText12,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                currentUser.value!.fullName!,
+                style: WordieTypography.bodyText12,
+              ),
+              notesList.when(
+                  data: (data) => ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) => Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              color: WordieConstants.containerColor,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: 30.0.cRadius,
+                                topLeft: 30.0.cRadius,
+                              )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data[index].title,
+                                style: WordieTypography.h1,
+                              ),
+                              Text(
+                                data[index].body,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: WordieTypography.bodyText16,
+                              ),
+                              const Divider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Icon(Icons.delete),
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      bool success = await ref
+                                          .read(asyncUpdateFavProvider.notifier)
+                                          .updateFavNote(
+                                              oldTitle: data[index].title,
+                                              isFav: !data[index].isFavorite);
+                                      if (success) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(data[index].isFavorite
+                                              ? 'Removed to fovourites'
+                                              : 'Added to fovourites'),
+                                          dismissDirection: DismissDirection.up,
+                                          backgroundColor:
+                                              WordieConstants.mainColor,
+                                        ));
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(ref
+                                              .watch(asyncUpdateProvider)
+                                              .error
+                                              .toString()),
+                                          dismissDirection: DismissDirection.up,
+                                          backgroundColor:
+                                              WordieConstants.mainColor,
+                                        ));
+                                      }
+                                    },
+                                    child: Icon(data[index].isFavorite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      ref
+                                          .read(selectedNoteProvider.notifier)
+                                          .state = data[index];
+                                      context.goNamed(EditNoteScreen.routeName);
+                                    },
+                                    child: Icon(Icons.edit),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )),
+                      separatorBuilder: (context, index) => 10.0.vSpace,
+                      itemCount: data.length),
+                  error: (error, stackTrace) =>
+                      const CircularProgressIndicator(),
+                  loading: () => CircularProgressIndicator()),
+            ],
           ),
-          notesList.when(
-              data: (data) => ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => Text(data[index].title),
-                  separatorBuilder: (context, index) => 10.0.vSpace,
-                  itemCount: data.length),
-              error: (error, stackTrace) => const CircularProgressIndicator(),
-              loading: () => CircularProgressIndicator()),
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add Note',

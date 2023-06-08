@@ -13,6 +13,12 @@ extension Shuffle on String {
   }
 }
 
+extension MyRadius on double {
+  Radius get cRadius {
+    return Radius.circular(this);
+  }
+}
+
 extension SizeB on double {
   SizedBox get vSpace => SizedBox(
         height: this,

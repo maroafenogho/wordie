@@ -17,6 +17,7 @@ class NoteService {
       await dbRef.child(noteTitle).set({
         'title': noteTitle,
         'body': noteBody,
+        'is_favorite': true,
         'created': DateTime.now().toString(),
         'updated': DateTime.now().toString()
       });
@@ -47,6 +48,62 @@ class NoteService {
     //     list.add(Note.fromMap(value));
     //   });
     // });
+  }
+
+  Future<bool> updateNote(
+      {required String userId,
+      required String oldTitle,
+      required String newTitle,
+      required String newBody,
+      required Ref ref}) async {
+    bool success = false;
+    final dbRef =
+        ref.watch(firebaseDbInstance).ref('notes/$userId/notes/$oldTitle');
+    try {
+      await dbRef.update({
+        'title': newTitle,
+        'body': newBody,
+        'updated': DateTime.now().toString()
+      });
+      success = true;
+    } catch (error) {
+      print(error);
+    }
+    return success;
+  }
+
+  Future<bool> updateFavNote(
+      {required String userId,
+      required String oldTitle,
+      required bool isFav,
+      required Ref ref}) async {
+    bool success = false;
+    final dbRef =
+        ref.watch(firebaseDbInstance).ref('notes/$userId/notes/$oldTitle');
+    try {
+      await dbRef
+          .update({'is_favorite': isFav, 'updated': DateTime.now().toString()});
+      success = true;
+    } catch (error) {
+      print(error);
+    }
+    return success;
+  }
+
+  Future<bool> deleteNote(
+      {required String userId,
+      required String oldTitle,
+      required Ref ref}) async {
+    bool success = false;
+    final dbRef =
+        ref.watch(firebaseDbInstance).ref('notes/$userId/notes/$oldTitle');
+    try {
+      await dbRef.remove();
+      success = true;
+    } catch (error) {
+      print(error);
+    }
+    return success;
   }
 
   Future<List<Note>> getNotes(String userId, Ref ref) async {

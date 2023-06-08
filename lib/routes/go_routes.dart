@@ -3,6 +3,7 @@ import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart'
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
 import 'package:wordie/src/features/game/presentation/screens/add_note.dart';
+import 'package:wordie/src/features/game/presentation/screens/edit_note.dart';
 import 'package:wordie/src/features/game/presentation/screens/home.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
 
@@ -32,6 +33,11 @@ final GoRouter routes =
           path: AddNoteScreen.routeName,
           name: AddNoteScreen.routeName,
           builder: (context, state) => AddNoteScreen(),
+        ),
+        GoRoute(
+          path: EditNoteScreen.routeName,
+          name: EditNoteScreen.routeName,
+          builder: (context, state) => EditNoteScreen(),
         )
       ]),
   GoRoute(

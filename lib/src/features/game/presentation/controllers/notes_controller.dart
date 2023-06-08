@@ -13,6 +13,9 @@ final firebaseDbInstance = Provider((ref) => FirebaseDatabase.instance);
 final notesListProvider = StreamNotifierProvider<NotesListNotifier, List<Note>>(
   () => NotesListNotifier(),
 );
+
+final selectedNoteProvider = StateProvider((ref) =>
+    Note(title: '', body: '', created: '', updated: '', isFavorite: false));
 final notesRepoProvider = Provider((ref) => NoteRepo(ref: ref));
 
 final asyncAddNoteProvider =
@@ -31,13 +34,80 @@ class NotesListNotifier extends StreamNotifier<List<Note>> {
   }
 }
 
+final asyncUpdateProvider =
+    AsyncNotifierProvider<AsyncUpdateNoteNotifier, bool>(
+  () => AsyncUpdateNoteNotifier(),
+);
+
+class AsyncUpdateNoteNotifier extends AsyncNotifier<bool> {
+  @override
+  FutureOr<bool> build() {
+    throw UnimplementedError();
+  }
+
+  Future<bool> updateNote({
+    required String userId,
+    required String oldTitle,
+    required String newTitle,
+    required String newBody,
+  }) async {
+    bool success = false;
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      success = await ref.read(notesRepoProvider).updateNote(
+          userId: userId,
+          oldTitle: oldTitle,
+          newTitle: newTitle,
+          newBody: newBody);
+      return success;
+    });
+    if (state.hasError) {
+      state = AsyncValue.error(state.error!, state.stackTrace!);
+
+      log(state.stackTrace!.toString());
+    }
+    return success;
+  }
+}
+
+final asyncUpdateFavProvider =
+    AsyncNotifierProvider<AsyncUpdateFavNoteNotifier, bool>(
+  () => AsyncUpdateFavNoteNotifier(),
+);
+
+class AsyncUpdateFavNoteNotifier extends AsyncNotifier<bool> {
+  @override
+  FutureOr<bool> build() {
+    throw UnimplementedError();
+  }
+
+  Future<bool> updateFavNote(
+      {required String oldTitle, required bool isFav}) async {
+    bool success = false;
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      success = await ref.read(notesRepoProvider).updateFavNote(
+          userId: ref.watch(currentUserProvider).value!.userId,
+          oldTitle: oldTitle,
+          isFav: isFav);
+      return success;
+    });
+    if (state.hasError) {
+      state = AsyncValue.error(state.error!, state.stackTrace!);
+
+      log(state.stackTrace!.toString());
+    }
+    return success;
+  }
+}
+
 class AsyncCreateNoteNotifier extends AsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
     throw UnimplementedError();
   }
 
-  Future<bool> creatNote(
+  Future<bool> createNote(
       {required String userId,
       required String noteTitle,
       required String noteBody}) async {
