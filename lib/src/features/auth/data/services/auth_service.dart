@@ -28,7 +28,8 @@ class AuthService {
       final credential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (!credential.user!.emailVerified) {
-        throw Exception('Unverified email address');
+        await logout()
+            .then((value) => throw Exception('Unverified email address'));
       }
       return _userFromFirebase(credential.user);
     } on auth.FirebaseAuthException catch (error) {
@@ -59,7 +60,7 @@ class AuthService {
           email: email, password: password);
 
       await credential.user!.updateDisplayName('$firstName $lastName');
-      log(credential.user!.toString());
+
       await credential.user!.sendEmailVerification();
       return _userFromFirebase(credential.user);
     } on auth.FirebaseAuthException catch (error) {

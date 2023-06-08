@@ -13,6 +13,19 @@ extension Shuffle on String {
   }
 }
 
+extension PadLeft on int {
+  String get padLeft {
+    return toString().padLeft(2, '0');
+  }
+}
+
+extension Date on String {
+  String get dateFromString {
+    final date = DateTime.parse(this);
+    return '${date.hour.remainder(24).padLeft}:${date.minute.remainder(60).padLeft} ${date.day.remainder(31).padLeft}-${date.month.remainder(12).padLeft}-${date.year}';
+  }
+}
+
 extension Greeting on DateTime {
   String get greeting {
     if (hour > 16) {

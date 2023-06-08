@@ -5,6 +5,7 @@ import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
 import 'package:wordie/src/features/home/presentation/screens/add_note.dart';
 import 'package:wordie/src/features/home/presentation/screens/edit_note.dart';
 import 'package:wordie/src/features/home/presentation/screens/home.dart';
+import 'package:wordie/src/features/home/presentation/screens/note_details.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
 
 final GoRouter routes =
@@ -38,6 +39,11 @@ final GoRouter routes =
           path: EditNoteScreen.routeName,
           name: EditNoteScreen.routeName,
           builder: (context, state) => EditNoteScreen(),
+        ),
+        GoRoute(
+          path: NoteDetailsScreen.routeName,
+          name: NoteDetailsScreen.routeName,
+          builder: (context, state) => const NoteDetailsScreen(),
         )
       ]),
   GoRoute(

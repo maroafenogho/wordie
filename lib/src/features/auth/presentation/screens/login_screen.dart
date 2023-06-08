@@ -100,12 +100,14 @@ class LoginScreen extends ConsumerWidget {
                       backgroundColor: WordieConstants.mainColor,
                     ));
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Login successful.'),
-                      dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.mainColor,
-                    ));
-                    context.go(HomeScreen.routeName);
+                    if (user.emailVerified) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Login successful.'),
+                        dismissDirection: DismissDirection.up,
+                        backgroundColor: WordieConstants.mainColor,
+                      ));
+                      context.go(HomeScreen.routeName);
+                    } else {}
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
