@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/common/constants.dart';
+import 'package:wordie/src/features/game/presentation/controllers/home_controller.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const routeName = '/home_screen';
@@ -8,37 +9,35 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(currentIndexProvider);
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: WordieConstants.backgroundColor,
-        leading: Container(),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: ref.watch(currentScreenProvider)[currentIndex],
       ),
-      body: Container(),
       bottomNavigationBar: Container(
         width: MediaQuery.of(context).size.width,
         height: 80,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: WordieConstants.mainColor,
             borderRadius: BorderRadius.only(
-                // bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40))),
+                topLeft: Radius.circular(40), topRight: Radius.circular(40))),
         child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            selectedItemColor: WordieConstants.backgroundColor,
+            onTap: (index) =>
+                ref.read(currentIndexProvider.notifier).state = index,
             // type: BottomNavigationBarType.shifting,
             backgroundColor: WordieConstants.mainColor,
-            items: [
-              BottomNavigationBarItem(label: '', icon: Icon(Icons.home)),
-              BottomNavigationBarItem(label: '', icon: Icon(Icons.home)),
-              BottomNavigationBarItem(label: '', icon: Icon(Icons.home))
+            items: const [
+              BottomNavigationBarItem(
+                  label: 'Dashboard', icon: Icon(Icons.home)),
+              BottomNavigationBarItem(
+                  label: 'favourites', icon: Icon(Icons.favorite)),
+              BottomNavigationBarItem(
+                  label: 'Account', icon: Icon(Icons.account_circle_sharp))
             ]),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add Note',
-        backgroundColor: WordieConstants.mainColor,
-        foregroundColor: WordieConstants.backgroundColor,
-        splashColor: WordieConstants.backgroundColor,
-        onPressed: () {},
-        child: Icon(Icons.add),
       ),
     );
   }

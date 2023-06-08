@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:wordie/src/common/constants.dart';
 
 class WordieTypography {
-  static const bodyTextStyle2 = TextStyle(
+  static const bodyText16 = TextStyle(
+      fontSize: 16,
+      color: WordieConstants.wordieBlack,
+      fontWeight: FontWeight.w400);
+  static const bodyText14 = TextStyle(
       fontSize: 14,
       color: WordieConstants.wordieBlack,
       fontWeight: FontWeight.w400);
 
-  static const bodyTextStyle1 = TextStyle(
+  static const bodyText12 = TextStyle(
       fontSize: 12,
       color: WordieConstants.wordieBlack,
       fontWeight: FontWeight.w400);

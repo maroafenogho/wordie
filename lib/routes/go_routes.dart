@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
+import 'package:wordie/src/features/game/presentation/screens/add_note.dart';
 import 'package:wordie/src/features/game/presentation/screens/home.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
 
@@ -23,13 +24,19 @@ final GoRouter routes =
     builder: (context, state) => LoginScreen(),
   ),
   GoRoute(
-    name: HomeScreen.routeName,
-    path: HomeScreen.routeName,
-    builder: (context, state) => HomeScreen(),
-  ),
+      name: HomeScreen.routeName,
+      path: HomeScreen.routeName,
+      builder: (context, state) => const HomeScreen(),
+      routes: [
+        GoRoute(
+          path: AddNoteScreen.routeName,
+          name: AddNoteScreen.routeName,
+          builder: (context, state) => AddNoteScreen(),
+        )
+      ]),
   GoRoute(
     name: Wrapper.routeName,
     path: Wrapper.routeName,
-    builder: (context, state) => Wrapper(),
+    builder: (context, state) => const Wrapper(),
   ),
 ]);

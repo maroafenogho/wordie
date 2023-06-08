@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
@@ -34,7 +35,7 @@ class SignUpScreen extends ConsumerWidget {
             50.0.vSpace,
             const Text.rich(TextSpan(
                 text: 'Welcome to ',
-                style: WordieTypography.bodyTextStyle2,
+                style: WordieTypography.bodyText14,
                 children: [
                   TextSpan(text: 'WORDIE', style: WordieTypography.h1)
                 ])),
@@ -44,7 +45,7 @@ class SignUpScreen extends ConsumerWidget {
               child: Text(
                 'Fill in your details below to create an account.',
                 textAlign: TextAlign.start,
-                style: WordieTypography.bodyTextStyle1,
+                style: WordieTypography.bodyText12,
               ),
             ),
             10.0.vSpace,
@@ -99,59 +100,51 @@ class SignUpScreen extends ConsumerWidget {
               ),
             ),
             30.0.vSpace,
-            SizedBox(
-              height: 55,
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (emailController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty &&
-                      firstnameController.text.isNotEmpty &&
-                      lastnameController.text.isNotEmpty) {
-                    final user = await ref
-                        .watch(asyncSignUpProvider.notifier)
-                        .signUp(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            firstName: firstnameController.text.trim(),
-                            lastName: lastnameController.text.trim());
+            WordieButton(
+              text: 'SIGN UP',
+              isLoading: ref.watch(asyncSignUpProvider).isLoading,
+              onPressed: () async {
+                if (emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty &&
+                    firstnameController.text.isNotEmpty &&
+                    lastnameController.text.isNotEmpty) {
+                  final user = await ref
+                      .watch(asyncSignUpProvider.notifier)
+                      .signUp(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                          firstName: firstnameController.text.trim(),
+                          lastName: lastnameController.text.trim());
 
-                    if (user == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            ref.watch(asyncSignUpProvider).error.toString()),
-                        dismissDirection: DismissDirection.up,
-                        backgroundColor: WordieConstants.mainColor,
-                      ));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text(
-                            'User registration successful. Please check your email to verify your account'),
-                        dismissDirection: DismissDirection.up,
-                        backgroundColor: WordieConstants.mainColor,
-                      ));
-                      context.go(LoginScreen.routeName);
-                    }
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Please fill all text fields'),
+                  if (user == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text(ref.watch(asyncSignUpProvider).error.toString()),
                       dismissDirection: DismissDirection.up,
                       backgroundColor: WordieConstants.mainColor,
                     ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                          'User registration successful. Please check your email to verify your account'),
+                      dismissDirection: DismissDirection.up,
+                      backgroundColor: WordieConstants.mainColor,
+                    ));
+                    context.go(LoginScreen.routeName);
                   }
-                },
-                style: ElevatedButton.styleFrom(
-                    foregroundColor: WordieConstants.backgroundColor,
-                    backgroundColor: WordieConstants.mainColor),
-                child: ref.watch(asyncSignUpProvider).isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Sign Up'),
-              ),
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Please fill all text fields'),
+                    dismissDirection: DismissDirection.up,
+                    backgroundColor: WordieConstants.mainColor,
+                  ));
+                }
+              },
             ),
             30.0.vSpace,
             Text.rich(TextSpan(
                 text: 'Already have an account? ',
-                style: WordieTypography.bodyTextStyle1,
+                style: WordieTypography.bodyText12,
                 children: [
                   TextSpan(
                       text: 'Sign in',

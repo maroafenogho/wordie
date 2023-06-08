@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
@@ -32,7 +35,7 @@ class LoginScreen extends ConsumerWidget {
             50.0.vSpace,
             const Text.rich(TextSpan(
                 text: 'Welcome to ',
-                style: WordieTypography.bodyTextStyle2,
+                style: WordieTypography.bodyText14,
                 children: [
                   TextSpan(text: 'WORDIE', style: WordieTypography.h1)
                 ])),
@@ -77,54 +80,46 @@ class LoginScreen extends ConsumerWidget {
               ),
             ),
             30.0.vSpace,
-            SizedBox(
-              height: 55,
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (emailController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty) {
-                    final user =
-                        await ref.watch(asyncLoginProvider.notifier).login(
-                              emailController.text.trim(),
-                              passwordController.text.trim(),
-                            );
+            WordieButton(
+              text: 'LOGIN',
+              isLoading: ref.watch(asyncLoginProvider).isLoading,
+              onPressed: () async {
+                if (emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  final user =
+                      await ref.watch(asyncLoginProvider.notifier).login(
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                          );
 
-                    if (user == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            ref.watch(asyncLoginProvider).error.toString()),
-                        dismissDirection: DismissDirection.up,
-                        backgroundColor: WordieConstants.mainColor,
-                      ));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Login successful.'),
-                        dismissDirection: DismissDirection.up,
-                        backgroundColor: WordieConstants.mainColor,
-                      ));
-                      context.go(HomeScreen.routeName);
-                    }
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Please fill all text fields'),
+                  if (user == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text(ref.watch(asyncLoginProvider).error.toString()),
                       dismissDirection: DismissDirection.up,
                       backgroundColor: WordieConstants.mainColor,
                     ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Login successful.'),
+                      dismissDirection: DismissDirection.up,
+                      backgroundColor: WordieConstants.mainColor,
+                    ));
+                    context.go(HomeScreen.routeName);
                   }
-                },
-                style: ElevatedButton.styleFrom(
-                    foregroundColor: WordieConstants.backgroundColor,
-                    backgroundColor: WordieConstants.mainColor),
-                child: ref.watch(asyncLoginProvider).isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Sign Up'),
-              ),
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Please fill all text fields'),
+                    dismissDirection: DismissDirection.up,
+                    backgroundColor: WordieConstants.mainColor,
+                  ));
+                }
+              },
             ),
             30.0.vSpace,
             Text.rich(TextSpan(
                 text: 'Don\'t have an account? ',
-                style: WordieTypography.bodyTextStyle1,
+                style: WordieTypography.bodyText12,
                 children: [
                   TextSpan(
                       text: 'Sign up',

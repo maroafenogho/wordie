@@ -30,7 +30,7 @@ class WordieFormInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextFormField(
-        style: WordieTypography.bodyTextStyle2,
+        style: WordieTypography.bodyText14,
         onChanged: onChanged,
         controller: controller,
         obscureText: obscureText,
@@ -44,7 +44,7 @@ class WordieFormInput extends StatelessWidget {
           focusColor: WordieConstants.mainColor,
           fillColor: WordieConstants.backgroundColor,
           hintText: hintText,
-          hintStyle: WordieTypography.bodyTextStyle2,
+          hintStyle: WordieTypography.bodyText14,
           enabledBorder: WordieConstants.outlineBorder,
           focusedBorder: WordieConstants.outlineBorder,
         ),
