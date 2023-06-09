@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
@@ -49,7 +50,6 @@ class NotesGridView extends StatelessWidget {
                     bottomRight: 30.0.cRadius,
                     topLeft: 30.0.cRadius,
                   )),
-             
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,6 +199,6 @@ class NotesGridView extends StatelessWidget {
         crossAxisSpacing: 20,
         crossAxisCount: 2,
       ),
-    );
+    ).animate().flip();
   }
 }

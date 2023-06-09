@@ -16,11 +16,17 @@ class AccountScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
+          const Center(
+            child: Icon(
+              Icons.account_circle_sharp,
+              size: 75,
+            ),
+          ),
           TextButton(
               onPressed: () async {
                 await ref.read(asyncLogoutProvider.notifier).logout();
               },
-              child: Text('Logout'))
+              child: const Text('Logout'))
         ],
       ),
     );

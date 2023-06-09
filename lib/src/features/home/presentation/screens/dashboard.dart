@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -40,36 +38,48 @@ class Dashboard extends ConsumerWidget {
             children: [
               15.0.vSpace,
               Align(
-                alignment: Alignment.centerRight,
-                child: PopupMenuButton(
-                  surfaceTintColor: WordieConstants.backgroundColor,
-                  onSelected: (value) async {
-                    log(value);
-                    bool success = await ref
-                        .read(updateDisplayTypeProvider.notifier)
-                        .setDisplayType(value);
-                    if (success) {
-                      ref.read(displayTypeProvider.notifier).state = value;
-                    }
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return const [
-                      PopupMenuItem(
-                        value: 'list',
-                        child: Text('List'),
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          bool success = await ref
+                              .read(updateDisplayTypeProvider.notifier)
+                              .setDisplayType('list');
+                          if (success) {
+                            ref.read(displayTypeProvider.notifier).state =
+                                'list';
+                          }
+                        },
+                        child: Icon(
+                          Icons.list,
+                          color: displayType == 'list'
+                              ? WordieConstants.mainColor
+                              : WordieConstants.containerColor,
+                        ),
                       ),
-                      PopupMenuItem(
-                        value: 'grid',
-                        child: Text('Grid'),
+                      10.0.hSpace,
+                      InkWell(
+                        onTap: () async {
+                          bool success = await ref
+                              .read(updateDisplayTypeProvider.notifier)
+                              .setDisplayType('grid');
+                          if (success) {
+                            ref.read(displayTypeProvider.notifier).state =
+                                'grid';
+                          }
+                        },
+                        child: Icon(
+                          Icons.grid_view_rounded,
+                          color: displayType == 'grid'
+                              ? WordieConstants.mainColor
+                              : WordieConstants.containerColor,
+                          size: 20,
+                        ),
                       ),
-                    ];
-                  },
-                  child: const Text(
-                    'Change display ▼',
-                    style: WordieTypography.bodyText12,
-                  ),
-                ),
-              ),
+                    ],
+                  )),
               Text.rich(
                 TextSpan(
                     text: DateTime.now().greeting,
