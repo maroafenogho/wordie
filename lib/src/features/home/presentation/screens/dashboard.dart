@@ -42,6 +42,7 @@ class Dashboard extends ConsumerWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: PopupMenuButton(
+                  surfaceTintColor: WordieConstants.backgroundColor,
                   onSelected: (value) async {
                     log(value);
                     bool success = await ref
@@ -49,11 +50,6 @@ class Dashboard extends ConsumerWidget {
                         .setDisplayType(value);
                     if (success) {
                       ref.read(displayTypeProvider.notifier).state = value;
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Display type updated to $value'),
-                        dismissDirection: DismissDirection.up,
-                        backgroundColor: WordieConstants.mainColor,
-                      ));
                     }
                   },
                   itemBuilder: (BuildContext context) {
@@ -68,6 +64,10 @@ class Dashboard extends ConsumerWidget {
                       ),
                     ];
                   },
+                  child: const Text(
+                    'Change display ▼',
+                    style: WordieTypography.bodyText12,
+                  ),
                 ),
               ),
               Text.rich(
@@ -105,12 +105,12 @@ class Dashboard extends ConsumerWidget {
                         ? NotesListView(
                             ref: ref,
                             currentUser: currentUser,
-                            data: data,
+                            notesList: data,
                             size: size)
                         : NotesGridView(
                             ref: ref,
                             currentUser: currentUser,
-                            data: data,
+                            notesList: data,
                             size: size),
                 error: (error, stackTrace) => const CircularProgressIndicator(),
                 loading: () => CircularProgressIndicator(),

@@ -11,6 +11,7 @@ import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
+import 'package:wordie/src/utils/utils.dart';
 
 class SignUpScreen extends ConsumerWidget {
   SignUpScreen({super.key});
@@ -117,27 +118,22 @@ class SignUpScreen extends ConsumerWidget {
                           lastName: lastnameController.text.trim());
 
                   if (user == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text(ref.watch(asyncSignUpProvider).error.toString()),
-                      dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.mainColor,
-                    ));
+                     showSnackbar(
+                        ref.watch(asyncSignUpProvider).error.toString(),
+                        context);
+                  
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                          'User registration successful. Please check your email to verify your account'),
-                      dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.mainColor,
-                    ));
+                     showSnackbar(
+                       'User registration successful. Please check your email to verify your account',
+                        context);
+                   
                     context.go(LoginScreen.routeName);
                   }
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Please fill all text fields'),
-                    dismissDirection: DismissDirection.up,
-                    backgroundColor: WordieConstants.mainColor,
-                  ));
+                   showSnackbar(
+                       'Please fill all text fields',
+                        context);
+                 
                 }
               },
             ),

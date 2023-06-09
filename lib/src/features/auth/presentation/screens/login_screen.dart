@@ -12,6 +12,7 @@ import 'package:wordie/src/features/auth/presentation/controllers/auth_controlle
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
 import 'package:wordie/src/features/home/presentation/screens/home.dart';
+import 'package:wordie/src/utils/utils.dart';
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
@@ -95,26 +96,23 @@ class LoginScreen extends ConsumerWidget {
                   if (user == null) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content:
-                          Text(ref.watch(asyncLoginProvider).error.toString()),
+                          Text(ref.watch(asyncLoginProvider).error.toString(),style: WordieTypography.bodyText14,),
                       dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.mainColor,
+                      backgroundColor: WordieConstants.containerColor,
                     ));
                   } else {
                     if (user.emailVerified) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Login successful.'),
-                        dismissDirection: DismissDirection.up,
-                        backgroundColor: WordieConstants.mainColor,
-                      ));
+                       showSnackbar(
+                       'Login successful',
+                        context);
+                     
                       context.go(HomeScreen.routeName);
                     } else {}
                   }
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Please fill all text fields'),
-                    dismissDirection: DismissDirection.up,
-                    backgroundColor: WordieConstants.mainColor,
-                  ));
+                  showSnackbar(
+                        'Please fill all text fields',
+                        context);
                 }
               },
             ),

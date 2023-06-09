@@ -17,7 +17,7 @@ class NoteService {
       await dbRef.child(noteTitle).set({
         'title': noteTitle,
         'body': noteBody,
-        'is_favorite': true,
+        'is_favorite': false,
         'created': DateTime.now().toString(),
         'updated': DateTime.now().toString()
       });

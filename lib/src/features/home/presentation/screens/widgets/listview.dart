@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,19 +12,20 @@ import 'package:wordie/src/features/home/presentation/controllers/notes_controll
 import 'package:wordie/src/features/home/presentation/screens/edit_note.dart';
 import 'package:wordie/src/features/home/presentation/screens/note_details.dart';
 import 'package:wordie/src/features/home/presentation/screens/widgets/delete_widget.dart';
+import 'package:wordie/src/utils/utils.dart';
 
 class NotesListView extends StatelessWidget {
   const NotesListView({
     super.key,
     required this.ref,
     required this.currentUser,
-    required this.data,
+    required this.notesList,
     required this.size,
   });
 
   final WidgetRef ref;
   final AsyncValue<User?> currentUser;
-  final List<Note> data;
+  final List<Note> notesList;
   final Size size;
 
   @override
@@ -32,12 +35,13 @@ class NotesListView extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => InkWell(
               onTap: () {
-                ref.read(selectedNoteProvider.notifier).state = data[index];
+                ref.read(selectedNoteProvider.notifier).state =
+                    notesList[index];
 
                 context.goNamed(NoteDetailsScreen.routeName);
               },
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     color: WordieConstants.containerColor,
                     borderRadius: BorderRadius.only(
@@ -49,11 +53,11 @@ class NotesListView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      data[index].title,
+                      notesList[index].title,
                       style: WordieTypography.h1,
                     ),
                     Text(
-                      data[index].body,
+                      notesList[index].body,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: WordieTypography.bodyText16,
@@ -61,7 +65,7 @@ class NotesListView extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Last updated: ${data[index].updated.dateFromString}',
+                        'Last updated: ${notesList[index].updated.dateFromString}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: WordieTypography.bodyText12,
@@ -74,7 +78,7 @@ class NotesListView extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             ref.read(selectedNoteProvider.notifier).state =
-                                data[index];
+                                notesList[index];
                             showModalBottomSheet(
                               context: context,
                               builder: (context) => DeleteBottomSheet(
@@ -89,25 +93,17 @@ class NotesListView extends StatelessWidget {
                                               .watch(selectedNoteProvider)
                                               .title);
                                   if (success) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text('Deleted'),
-                                      dismissDirection: DismissDirection.up,
-                                      backgroundColor:
-                                          WordieConstants.mainColor,
-                                    ));
+                                    showSnackbar('Delted', context);
+
                                     context.pop();
                                   } else {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(ref
-                                          .watch(asyncDeleteNoteProvider)
-                                          .error
-                                          .toString()),
-                                      dismissDirection: DismissDirection.up,
-                                      backgroundColor:
-                                          WordieConstants.mainColor,
-                                    ));
+                                    showSnackbar(
+                                        ref
+                                            .watch(asyncDeleteNoteProvider)
+                                            .error
+                                            .toString(),
+                                        context);
+
                                     context.pop();
                                   }
                                 },
@@ -124,37 +120,31 @@ class NotesListView extends StatelessWidget {
                             bool success = await ref
                                 .read(asyncUpdateFavProvider.notifier)
                                 .updateFavNote(
-                                    oldTitle: data[index].title,
-                                    isFav: !data[index].isFavorite);
+                                    oldTitle: notesList[index].title,
+                                    isFav: !notesList[index].isFavorite);
                             if (success) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(data[index].isFavorite
-                                    ? 'Removed to fovourites'
-                                    : 'Added to fovourites'),
-                                dismissDirection: DismissDirection.up,
-                                backgroundColor: WordieConstants.mainColor,
-                              ));
+                              showSnackbar(
+                                  notesList[index].isFavorite
+                                      ? 'Removed to fovourites'
+                                      : 'Added to fovourites',
+                                  context);
                             } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(ref
-                                    .watch(asyncUpdateProvider)
-                                    .error
-                                    .toString()),
-                                dismissDirection: DismissDirection.up,
-                                backgroundColor: WordieConstants.mainColor,
-                              ));
+                              showSnackbar(
+                                  ref
+                                      .watch(asyncUpdateFavProvider)
+                                      .error
+                                      .toString(),
+                                  context);
                             }
                           },
-                          child: Icon(data[index].isFavorite
+                          child: Icon(notesList[index].isFavorite
                               ? Icons.favorite
                               : Icons.favorite_border),
                         ),
                         InkWell(
                           onTap: () {
                             ref.read(selectedNoteProvider.notifier).state =
-                                data[index];
+                                notesList[index];
                             context.goNamed(EditNoteScreen.routeName);
                           },
                           child: Icon(Icons.edit),
@@ -166,6 +156,6 @@ class NotesListView extends StatelessWidget {
               ),
             ),
         separatorBuilder: (context, index) => 10.0.vSpace,
-        itemCount: data.length);
+        itemCount: notesList.length);
   }
 }
