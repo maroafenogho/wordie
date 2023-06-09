@@ -15,6 +15,10 @@ class WordieTypography {
       fontSize: 12,
       color: WordieConstants.wordieBlack,
       fontWeight: FontWeight.w400);
+  static const bodyText10 = TextStyle(
+      fontSize: 10,
+      color: WordieConstants.wordieBlack,
+      fontWeight: FontWeight.w400);
 
   static const h1 = TextStyle(
       fontSize: 25,
