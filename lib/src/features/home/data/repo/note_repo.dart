@@ -9,6 +9,10 @@ class NoteRepo {
   NoteRepo({NoteService? service, required this.ref})
       : _noteService = service ?? NoteService();
 
+  Future<bool> setDbRef(String userId) async {
+    return _noteService.setDbRef(ref: ref, userId: userId);
+  }
+
   Future<bool> createNote(
       {required String userId,
       required String noteTitle,

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
+import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
 
 import '../../data/repo/auth_repo.dart';
 
@@ -86,6 +87,7 @@ class AsyncSignUpNotifier extends AsyncNotifier<User?> {
           password: password,
           firstName: firstName,
           lastName: lastName);
+      await ref.read(notesRepoProvider).setDbRef(user!.userId);
       return user;
     });
     if (state.hasError) {

@@ -28,13 +28,32 @@ class NoteService {
     return success;
   }
 
+  Future<bool> setDbRef({
+    required Ref ref,
+    required String userId,
+  }) async {
+    bool success = false;
+    final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/notes');
+    try {
+      await dbRef.set({});
+      success = true;
+    } catch (e) {
+      success = false;
+    }
+    return success;
+  }
+
   List<Note> _listFromFirebase(DatabaseEvent event) {
     final list = <Note>[];
-    Map<dynamic, dynamic> map = event.snapshot.value as Map;
-    map.forEach((key, value) {
-      log(value.toString());
-      list.add(Note.fromMap(value));
-    });
+    if (event.snapshot.value != null) {
+      Map<dynamic, dynamic> map = event.snapshot.value as Map;
+
+      map.forEach((key, value) {
+        log(value.toString());
+        list.add(Note.fromMap(value));
+      });
+    }
+
     return list;
   }
 

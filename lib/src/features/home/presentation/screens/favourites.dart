@@ -18,8 +18,8 @@ class Favourites extends ConsumerWidget {
     Size size = MediaQuery.of(context).size;
     final favNotesList = ref
         .watch(notesListProvider)
-        .value!
-        .where((note) => note.isFavorite)
+        .value
+        ?.where((note) => note.isFavorite)
         .toList();
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
@@ -37,7 +37,7 @@ class Favourites extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              favNotesList.isEmpty
+              (favNotesList != null && favNotesList.isEmpty)
                   ? SizedBox(
                       height: size.height * 0.7,
                       width: size.width,
@@ -62,7 +62,7 @@ class Favourites extends ConsumerWidget {
                       itemBuilder: (context, index) => InkWell(
                             onTap: () {
                               ref.read(selectedNoteProvider.notifier).state =
-                                  favNotesList[index];
+                                  favNotesList![index];
 
                               context.goNamed(NoteDetailsScreen.routeName);
                             },
@@ -80,7 +80,7 @@ class Favourites extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      favNotesList[index].title,
+                                      favNotesList![index].title,
                                       style: WordieTypography.h1,
                                     ),
                                     Text(
@@ -227,7 +227,7 @@ class Favourites extends ConsumerWidget {
                                 )),
                           ),
                       separatorBuilder: (context, index) => 10.0.vSpace,
-                      itemCount: favNotesList.length),
+                      itemCount: favNotesList!.length),
             ],
           ),
         ),
