@@ -7,7 +7,7 @@ class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(currentUserProvider);
+    // final currentUser = ref.watch(currentUserProvider);
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
       appBar: AppBar(
