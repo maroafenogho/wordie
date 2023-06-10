@@ -9,7 +9,7 @@ The first step to testing or running this app is getting the code
     git clone https://github.com/maroafenogho/wordie.git
     .
     .
-    <em>flutter pub get</em>
+    flutter pub get
 
 ## App Features
 The app uses the riverpod folder structure:
