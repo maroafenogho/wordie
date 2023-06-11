@@ -22,7 +22,7 @@ The app uses the riverpod folder structure:
                     /📁presentation/📁screens/note_screen.dart
                                    /📁controllers/note_controller.dart
 
-<a href="https://pub.dev/packages/flutter_riverpod">Riverpod</a> is used for state management, <a href="https://pub.dev/packages/go_router">go_router</a> for navigation firebase for authentication and realtime database.
+<a href="https://pub.dev/packages/flutter_riverpod">Riverpod</a> is used for state management, <a href="https://pub.dev/packages/go_router">go_router</a> for navigation, firebase for authentication and realtime database.
 
 Each <strong>service.dart</strong> file contains code to query Firebase or carry out authentication calls. The data retrieved fron the network call is parsed to the <strong>repo.dart</strong> class.The controller class receives the data from the repo and in turn determines what the user sees.
 
@@ -30,6 +30,13 @@ Each <strong>service.dart</strong> file contains code to query Firebase or carry
 <img src="./sign_up_screen.jpg">
 
 When you run the app for the first time, you will be directed to the login page. As a new user, you would have to navigate to the sign-up page by tapping on the signup botton. 
-User registration is achieved by using the createUserWithEmailAndPassword() method from firebase. When a user is successfully registered, the entered name is used to update the user's display name and a verification email is sent while the app navigates to the Login screen. The login logic prevents users who have not verified their email addresses from gaining access.
+User registration is achieved by using the *createUserWithEmailAndPassword()* method from firebase. When a user is successfully registered, the entered name is used to update the user's display name and a verification email is sent while the app navigates to the Login screen. The login logic prevents users who have not verified their email addresses from gaining access.
 
 <img src="./login_screen.jpg">
+
+ 
+<img src="./list_notes.jpg">
+<img src="./grid_notes.jpg">
+<img src="./add_note.jpg.jpg">
+<img src="./delete_note.jpg.jpg">
+<img src="./favourites.jpg.jpg.jpg">

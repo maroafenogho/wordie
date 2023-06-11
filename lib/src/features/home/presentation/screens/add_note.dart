@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
@@ -22,76 +21,78 @@ class AddNoteScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: WordieConstants.backgroundColor,
         leading: InkWell(
+          onTap: () {
+            context.pop();
+            if (titleController.text.isNotEmpty &&
+                bodyController.text.isNotEmpty) {
+              ref.read(asyncAddNoteProvider.notifier).createNote(
+                  userId: ref.watch(currentUserProvider).value!.userId,
+                  noteTitle: titleController.text.trim(),
+                  noteBody: bodyController.text.trim());
+            }
+          },
+          child: const Icon(Icons.arrow_back_ios_new),
+        ),
+        actions: [
+          InkWell(
             onTap: () {
               context.pop();
             },
-            child: const Icon(Icons.arrow_back_ios_new)),
+            child: const Icon(Icons.cancel_sharp),
+          ),
+          20.0.hSpace
+        ],
         title: const Text(
           'Add Note',
           style: WordieTypography.h4,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            30.0.vSpace,
-            TextField(
-              controller: titleController,
-              style: WordieTypography.h1,
-              keyboardType: TextInputType.name,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(hintText: 'Note Title'),
-            ),
-            10.0.vSpace,
-            TextField(
-              controller: bodyController,
-              keyboardType: TextInputType.multiline,
-              minLines: 1,
-              maxLines: 10,
-              textCapitalization: TextCapitalization.sentences,
-              style: WordieTypography.bodyText16,
-              decoration: const InputDecoration(hintText: 'Note body'),
-            ),
-            30.0.vSpace,
-            WordieButton(
-              isLoading: ref.watch(asyncAddNoteProvider).isLoading,
-              onPressed: () async {
-                if (titleController.text.isNotEmpty &&
-                    bodyController.text.isNotEmpty) {
-                  bool success = await ref
-                      .read(asyncAddNoteProvider.notifier)
-                      .createNote(
-                          userId: ref.watch(currentUserProvider).value!.userId,
-                          noteTitle: titleController.text.trim(),
-                          noteBody: bodyController.text.trim());
-
-                  if (success) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Note saved successfully'),
-                      dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.mainColor,
-                    ));
-                    context.pop();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          ref.watch(asyncAddNoteProvider).error.toString()),
-                      dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.mainColor,
-                    ));
-                  }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Enter title and body to save note'),
-                    dismissDirection: DismissDirection.up,
-                    backgroundColor: WordieConstants.mainColor,
-                  ));
-                }
-              },
-              text: 'save',
-            )
-          ],
+      body: BackButtonListener(
+        onBackButtonPressed: () async {
+          context.pop();
+          if (titleController.text.isNotEmpty &&
+              bodyController.text.isNotEmpty) {
+            ref.read(asyncAddNoteProvider.notifier).createNote(
+                userId: ref.watch(currentUserProvider).value!.userId,
+                noteTitle: titleController.text.trim(),
+                noteBody: bodyController.text.trim());
+          }
+          return Future.delayed(const Duration(seconds: 0));
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              30.0.vSpace,
+              Expanded(
+                flex: 1,
+                child: TextField(
+                  controller: titleController,
+                  style: WordieTypography.h1,
+                  keyboardType: TextInputType.name,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: const InputDecoration(hintText: 'Note Title'),
+                ),
+              ),
+              10.0.vSpace,
+              Expanded(
+                flex: 9,
+                child: TextField(
+                  controller: bodyController,
+                  keyboardType: TextInputType.multiline,
+                  minLines: null,
+                  maxLines: null,
+                  autofocus: true,
+                  expands: true,
+                  textCapitalization: TextCapitalization.sentences,
+                  style: WordieTypography.bodyText16,
+                  decoration: const InputDecoration(
+                      hintText: 'Note body', border: InputBorder.none),
+                ),
+              ),
+              30.0.vSpace,
+            ],
+          ),
         ),
       ),
     );

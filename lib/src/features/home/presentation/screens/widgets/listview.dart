@@ -10,9 +10,7 @@ import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
 import 'package:wordie/src/features/home/domain/note.dart';
 import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
-import 'package:wordie/src/features/home/presentation/screens/edit_note.dart';
 import 'package:wordie/src/features/home/presentation/screens/note_details.dart';
-import 'package:wordie/src/features/home/presentation/screens/widgets/delete_widget.dart';
 import 'package:wordie/src/utils/utils.dart';
 
 class NotesListView extends StatelessWidget {
@@ -41,7 +39,7 @@ class NotesListView extends StatelessWidget {
           context.goNamed(NoteDetailsScreen.routeName);
         },
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
               color: WordieConstants.containerColor,
               borderRadius: BorderRadius.only(
@@ -54,13 +52,13 @@ class NotesListView extends StatelessWidget {
             children: [
               Text(
                 notesList[index].title,
-                style: WordieTypography.h1,
+                style: WordieTypography.h4,
               ),
               Text(
                 notesList[index].body,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: WordieTypography.bodyText16,
+                style: WordieTypography.bodyText14,
               ),
               Align(
                 alignment: Alignment.centerRight,
@@ -73,46 +71,8 @@ class NotesListView extends StatelessWidget {
               ),
               const Divider(),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      ref.read(selectedNoteProvider.notifier).state =
-                          notesList[index];
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => DeleteBottomSheet(
-                          size: size,
-                          onNoTap: () => context.pop(),
-                          onYesTap: () async {
-                            bool success = await ref
-                                .read(asyncDeleteNoteProvider.notifier)
-                                .deleteNote(
-                                    userId: currentUser.value!.userId,
-                                    oldTitle:
-                                        ref.watch(selectedNoteProvider).title);
-                            if (success) {
-                              showSnackbar('Delted', context);
-
-                              context.pop();
-                            } else {
-                              showSnackbar(
-                                  ref
-                                      .watch(asyncDeleteNoteProvider)
-                                      .error
-                                      .toString(),
-                                  context);
-
-                              context.pop();
-                            }
-                          },
-                          isLoading:
-                              ref.watch(asyncDeleteNoteProvider).isLoading,
-                        ),
-                      );
-                    },
-                    child: Icon(Icons.delete),
-                  ),
                   InkWell(
                     onTap: () async {
                       bool success = await ref
@@ -135,14 +95,6 @@ class NotesListView extends StatelessWidget {
                     child: Icon(notesList[index].isFavorite
                         ? Icons.favorite
                         : Icons.favorite_border),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      ref.read(selectedNoteProvider.notifier).state =
-                          notesList[index];
-                      context.goNamed(EditNoteScreen.routeName);
-                    },
-                    child: Icon(Icons.edit),
                   ),
                 ],
               )

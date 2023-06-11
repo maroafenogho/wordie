@@ -43,7 +43,7 @@ final GoRouter routes =
         GoRoute(
           path: NoteDetailsScreen.routeName,
           name: NoteDetailsScreen.routeName,
-          builder: (context, state) => const NoteDetailsScreen(),
+          builder: (context, state) => NoteDetailsScreen(),
         )
       ]),
   GoRoute(

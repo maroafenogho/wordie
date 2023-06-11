@@ -8,7 +8,7 @@ final sharedPreferencesProvider =
     Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
 final displayTypeProvider = StateProvider(
-  (ref) => ref.read(settingsRepoProvider).getDisplayType(),
+  (ref) => ref.read(settingsRepoProvider).getDisplayType() ?? 'list',
 );
 final settingsRepoProvider = Provider(
   (ref) => SettingsRepo(ref: ref),
