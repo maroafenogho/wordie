@@ -25,16 +25,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Wordie',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: WordieConstants.mainColor,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: MaterialApp.router(
+        title: 'Wordie',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: WordieConstants.mainColor,
+          ),
+          useMaterial3: true,
         ),
-        useMaterial3: true,
+        debugShowCheckedModeBanner: false,
+        routerConfig: routes,
       ),
-      debugShowCheckedModeBanner: false,
-      routerConfig: routes,
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wordie/src/common/constants.dart';
+import 'package:wordie/src/features/home/domain/note.dart';
 
 extension WordLength on String {
   int get wordLength => length;
@@ -23,6 +25,21 @@ extension Date on String {
   String get dateFromString {
     final date = DateTime.parse(this);
     return '${date.hour.remainder(24).padLeft}:${date.minute.remainder(60).padLeft} ${date.day.remainder(31).padLeft}-${date.month.remainder(12).padLeft}-${date.year}';
+  }
+}
+
+extension IntDate on String {
+  int get epochDateFromString {
+    final date = DateTime.parse(this).millisecondsSinceEpoch;
+    return date;
+  }
+}
+
+extension MyList on List<Note> {
+  List<Note> get orderedByDate {
+    sort(((a, b) => b.created.epochDateFromString
+        .compareTo(a.created.epochDateFromString)));
+    return this;
   }
 }
 
@@ -62,8 +79,10 @@ extension SizeB on double {
 }
 
 extension Annotation on Widget {
-  AnnotatedRegion<SystemUiOverlayStyle> darkStatusBar() =>
-      AnnotatedRegion(value: SystemUiOverlayStyle.dark, child: this);
+  AnnotatedRegion<SystemUiOverlayStyle> darkStatusBar() => AnnotatedRegion(
+      value: SystemUiOverlayStyle.dark
+          .copyWith(statusBarColor: WordieConstants.backgroundColor),
+      child: this);
   AnnotatedRegion<SystemUiOverlayStyle> lightStatusBar() =>
       AnnotatedRegion(value: SystemUiOverlayStyle.light, child: this);
 }

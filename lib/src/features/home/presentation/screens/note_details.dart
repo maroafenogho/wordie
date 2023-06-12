@@ -34,17 +34,11 @@ class NoteDetailsScreen extends ConsumerWidget {
         leading: InkWell(
           onTap: () {
             context.pop();
-            if (titleController.text.isNotEmpty &&
-                bodyController.text.isNotEmpty) {
-              ref.read(asyncAddNoteProvider.notifier).createNote(
-                  userId: ref.watch(currentUserProvider).value!.userId,
-                  noteTitle: titleController.text.trim(),
-                  noteBody: bodyController.text.trim());
-            } else {
-              ref.read(asyncDeleteNoteProvider.notifier).deleteNote(
-                  userId: currentUser.value!.userId,
-                  oldTitle: ref.watch(selectedNoteProvider).title);
-            }
+            checkNoteUpdate(
+              ref: ref,
+              selectedNote: selectedNote,
+              currentUser: currentUser,
+            );
           },
           child: const Icon(Icons.arrow_back_ios_new),
         ),
@@ -100,13 +94,8 @@ class NoteDetailsScreen extends ConsumerWidget {
       ),
       body: BackButtonListener(
         onBackButtonPressed: () {
-          if (titleController.text.isNotEmpty &&
-              bodyController.text.isNotEmpty) {
-            ref.read(asyncAddNoteProvider.notifier).createNote(
-                userId: currentUser.value!.userId,
-                noteTitle: titleController.text.trim(),
-                noteBody: bodyController.text.trim());
-          }
+          checkNoteUpdate(
+              ref: ref, selectedNote: selectedNote, currentUser: currentUser);
           return Future.delayed(const Duration(seconds: 0));
         },
         child: Padding(
@@ -150,5 +139,21 @@ class NoteDetailsScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  checkNoteUpdate({required ref, required selectedNote, required currentUser}) {
+    if ((titleController.text.isNotEmpty && bodyController.text.isNotEmpty) &&
+        (titleController.text.trim() != selectedNote.title ||
+            bodyController.text.trim() != selectedNote.body)) {
+      ref.read(asyncUpdateProvider.notifier).updateNote(
+          userId: ref.watch(currentUserProvider).value!.userId,
+          oldTitle: selectedNote.title,
+          newTitle: titleController.text.trim(),
+          newBody: bodyController.text.trim());
+    } else if (titleController.text.isEmpty && bodyController.text.isEmpty) {
+      ref.read(asyncDeleteNoteProvider.notifier).deleteNote(
+          userId: currentUser.value!.userId,
+          oldTitle: ref.watch(selectedNoteProvider).title);
+    }
   }
 }

@@ -115,15 +115,15 @@ class Dashboard extends ConsumerWidget {
                         ? NotesListView(
                             ref: ref,
                             currentUser: currentUser,
-                            notesList: data,
+                            notesList: data.orderedByDate,
                             size: size)
                         : NotesGridView(
                             ref: ref,
                             currentUser: currentUser,
-                            notesList: data,
+                            notesList: data.orderedByDate,
                             size: size),
                 error: (error, stackTrace) => const CircularProgressIndicator(),
-                loading: () => CircularProgressIndicator(),
+                loading: () => const LinearProgressIndicator(),
               ),
             ],
           ),
@@ -139,6 +139,6 @@ class Dashboard extends ConsumerWidget {
         },
         child: const Icon(Icons.add),
       ),
-    );
+    ).darkStatusBar();
   }
 }

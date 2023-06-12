@@ -95,24 +95,22 @@ class LoginScreen extends ConsumerWidget {
 
                   if (user == null) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text(ref.watch(asyncLoginProvider).error.toString(),style: WordieTypography.bodyText14,),
+                      content: Text(
+                        ref.watch(asyncLoginProvider).error.toString(),
+                        style: WordieTypography.bodyText14,
+                      ),
                       dismissDirection: DismissDirection.up,
                       backgroundColor: WordieConstants.containerColor,
                     ));
                   } else {
                     if (user.emailVerified) {
-                       showSnackbar(
-                       'Login successful',
-                        context);
-                     
+                      showSnackbar('Login successful', context);
+
                       context.go(HomeScreen.routeName);
                     } else {}
                   }
                 } else {
-                  showSnackbar(
-                        'Please fill all text fields',
-                        context);
+                  showSnackbar('Please fill all text fields', context);
                 }
               },
             ),
@@ -131,6 +129,6 @@ class LoginScreen extends ConsumerWidget {
           ],
         ),
       ),
-    ).lightStatusBar();
+    ).darkStatusBar();
   }
 }

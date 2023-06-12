@@ -11,6 +11,10 @@ The first step to testing or running this app is getting the code
     .
     flutter pub get
 
+Run the app to confirm that everything works
+    
+    flutter run
+
 ## App Features
 
 The app uses the riverpod folder structure:
@@ -35,8 +39,6 @@ User registration is achieved by using the *createUserWithEmailAndPassword()* me
 <img src="./login_screen.jpg">
 
  
-<img src="./list_notes.jpg">
-<img src="./grid_notes.jpg">
-<img src="./add_note.jpg.jpg">
-<img src="./delete_note.jpg.jpg">
-<img src="./favourites.jpg.jpg.jpg">
+<video width="288" height="640" autoplay>
+<source src="movie.mp4" type="video/mp4">
+</video>

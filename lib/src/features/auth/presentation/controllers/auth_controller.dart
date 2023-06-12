@@ -8,12 +8,23 @@ import 'package:wordie/src/features/home/presentation/controllers/notes_controll
 import '../../data/repo/auth_repo.dart';
 
 final currentUserProvider =
-    StreamProvider((ref) => ref.watch(authRepoProvider).currentUser);
+    StreamNotifierProvider<UserNotifier, User?>(() => UserNotifier());
 final authRepoProvider = Provider((ref) => AuthRepo());
 final showPasswordProvider = StateProvider<bool>((ref) => false);
 final asyncSignUpProvider = AsyncNotifierProvider<AsyncSignUpNotifier, User?>(
   () => AsyncSignUpNotifier(),
 );
+
+class UserNotifier extends StreamNotifier<User?> {
+  @override
+  Stream<User?> build() {
+    return getCurrentUser();
+  }
+
+  Stream<User?> getCurrentUser() {
+    return ref.read(authRepoProvider).currentUser;
+  }
+}
 
 final asyncLoginProvider = AsyncNotifierProvider<AsyncLoginNotifier, User?>(
   () => AsyncLoginNotifier(),

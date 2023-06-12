@@ -95,6 +95,6 @@ class AddNoteScreen extends ConsumerWidget {
           ),
         ),
       ),
-    );
+    ).darkStatusBar();
   }
 }

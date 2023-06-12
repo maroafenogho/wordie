@@ -118,22 +118,18 @@ class SignUpScreen extends ConsumerWidget {
                           lastName: lastnameController.text.trim());
 
                   if (user == null) {
-                     showSnackbar(
+                    showSnackbar(
                         ref.watch(asyncSignUpProvider).error.toString(),
                         context);
-                  
                   } else {
-                     showSnackbar(
-                       'User registration successful. Please check your email to verify your account',
+                    showSnackbar(
+                        'User registration successful. Please check your email to verify your account',
                         context);
-                   
+
                     context.go(LoginScreen.routeName);
                   }
                 } else {
-                   showSnackbar(
-                       'Please fill all text fields',
-                        context);
-                 
+                  showSnackbar('Please fill all text fields', context);
                 }
               },
             ),
@@ -152,6 +148,6 @@ class SignUpScreen extends ConsumerWidget {
           ],
         ),
       ),
-    ).lightStatusBar();
+    )..darkStatusBar();
   }
 }
