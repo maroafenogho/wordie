@@ -45,3 +45,13 @@ User registration is achieved by using the *createUserWithEmailAndPassword()* me
  <img src="./add_.jpg">
  <img src="./favs.jpg">
  <img src="./del.jpg">
+
+# What you can learn from this repo
+1. Riverpod state management and overrides
+2. go_router
+3. Custom widgets
+4. Firebase authentication
+5. Firebase database
+6. Riverpod Architecture
+7. Shared preferences
+8. Dart extension and more
