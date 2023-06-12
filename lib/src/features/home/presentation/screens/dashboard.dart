@@ -86,7 +86,9 @@ class Dashboard extends ConsumerWidget {
                     style: WordieTypography.h3,
                     children: [
                       TextSpan(
-                          text: ' ${currentUser.value!.fullName!.firstName}',
+                          text: currentUser.value == null
+                              ? ''
+                              : ' ${currentUser.value?.fullName?.firstName}',
                           style: WordieTypography.bodyText16)
                     ]),
               ),
@@ -97,20 +99,22 @@ class Dashboard extends ConsumerWidget {
                         height: size.height * 0.7,
                         width: size.width,
                         child: const Center(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.note_add,
-                              size: 50,
-                              color: WordieConstants.containerColor,
-                            ),
-                            Text(
-                              'You do not have any notes.\nTap on the button below to add a note.',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        )))
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.note_add,
+                                size: 50,
+                                color: WordieConstants.containerColor,
+                              ),
+                              Text(
+                                'You do not have any notes.\nTap on the button below to add a note.',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     : displayType == 'list'
                         ? NotesListView(
                             ref: ref,

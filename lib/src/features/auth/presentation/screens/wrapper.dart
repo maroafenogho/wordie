@@ -12,9 +12,9 @@ class Wrapper extends ConsumerWidget {
     final currentUser = ref.watch(currentUserProvider);
     return currentUser.when(
       data: (user) {
-        return user == null ? LoginScreen() : HomeScreen();
+        return user == null ? LoginScreen() : const HomeScreen();
       },
-      loading: () => CircularProgressIndicator(),
+      loading: () => const CircularProgressIndicator(),
       error: (error, stackTrace) => LoginScreen(),
     );
   }

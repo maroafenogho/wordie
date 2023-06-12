@@ -38,7 +38,10 @@ User registration is achieved by using the *createUserWithEmailAndPassword()* me
 
 <img src="./login_screen.jpg">
 
- 
-<video width="288" height="640" autoplay>
-<source src="movie.mp4" type="video/mp4">
-</video>
+ <img src="./empty_dash.jpg">
+ <img src="./empty_favs.jpg">
+ <img src="./dash_list.jpg">
+ <img src="./dash_grid.jpg">
+ <img src="./add_.jpg">
+ <img src="./favs.jpg">
+ <img src="./del.jpg">

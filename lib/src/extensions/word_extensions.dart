@@ -57,9 +57,13 @@ extension Greeting on DateTime {
   }
 }
 
-extension SeparateName on String {
+extension SeparateName on String? {
   String get firstName {
-    return split(' ')[0];
+    if (this == null) {
+      return '';
+    } else {
+      return this!.split(' ')[0];
+    }
   }
 }
 

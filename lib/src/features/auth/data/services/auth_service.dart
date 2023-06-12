@@ -45,7 +45,7 @@ class AuthService {
 
       success = true;
     } catch (error) {
-      print(error);
+      log(error.toString());
     }
     return success;
   }
