@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
+import 'package:wordie/src/features/home/presentation/controllers/note_list.dart';
 import 'package:wordie/src/features/home/presentation/screens/widgets/gridview.dart';
 import 'package:wordie/src/features/home/presentation/screens/widgets/listview.dart';
 import 'package:wordie/src/features/settings/presentation/controllers/settings_controller.dart';

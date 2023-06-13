@@ -7,7 +7,7 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
+import 'package:wordie/src/features/home/presentation/controllers/create_note.dart';
 
 class AddNoteScreen extends ConsumerWidget {
   AddNoteScreen({super.key});

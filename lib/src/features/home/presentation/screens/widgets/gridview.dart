@@ -10,6 +10,7 @@ import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
 import 'package:wordie/src/features/home/domain/note.dart';
 import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
+import 'package:wordie/src/features/home/presentation/controllers/update_fav_note.dart';
 import 'package:wordie/src/features/home/presentation/screens/note_details.dart';
 import 'package:wordie/src/utils/utils.dart';
 
