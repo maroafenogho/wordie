@@ -86,7 +86,7 @@ class NoteService {
       });
       success = true;
     } catch (error) {
-      print(error);
+      // print(error);
     }
     return success;
   }
@@ -104,7 +104,7 @@ class NoteService {
           .update({'is_favorite': isFav, 'updated': DateTime.now().toString()});
       success = true;
     } catch (error) {
-      print(error);
+      // print(error);
     }
     return success;
   }
@@ -120,7 +120,7 @@ class NoteService {
       await dbRef.remove();
       success = true;
     } catch (error) {
-      print(error);
+      // print(error);
     }
     return success;
   }
@@ -129,7 +129,7 @@ class NoteService {
     final list = <Note>[];
     final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/notes');
     dbRef.onValue.listen((event) => event.snapshot.value!);
-    final snapshot = await dbRef.once();
+    // final snapshot = await dbRef.once();
     // Map values = snapshot.snapshot.value!;
     await dbRef.once().then((value) {
       Map<dynamic, dynamic> map = value.snapshot.value as Map;
@@ -142,7 +142,7 @@ class NoteService {
       // }
       value.snapshot.value;
     });
-    print(snapshot.snapshot.value);
+    // print(snapshot.snapshot.value);
     // for (final note in snapshot.snapshot.children) {
     //   list.add(Note.fromMap(note.));
     // }

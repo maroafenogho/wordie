@@ -22,7 +22,7 @@ class DeleteBottomSheet extends StatelessWidget {
     return Container(
       height: size.height * 0.2,
       width: size.width,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: WordieConstants.backgroundColor,
           borderRadius: BorderRadius.only(
@@ -67,7 +67,7 @@ class DeleteBottomSheet extends StatelessWidget {
                   onTap: onYesTap,
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(vertical: 6),
+                    padding: const EdgeInsets.symmetric(vertical: 6),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.red),
                         borderRadius: BorderRadius.circular(20)),

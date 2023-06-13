@@ -13,7 +13,7 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
       body: Container(
-        padding: EdgeInsets.symmetric(
+        padding:const EdgeInsets.symmetric(
           horizontal: 20,
         ),
         child: ref.watch(currentScreenProvider)[currentIndex],

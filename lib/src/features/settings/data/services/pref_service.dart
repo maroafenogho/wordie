@@ -10,7 +10,6 @@ class SettingsService {
           .setString('display_type', displayType);
       success = true;
     } catch (e) {
-      print(e);
       throw Exception(e);
     }
     return success;
