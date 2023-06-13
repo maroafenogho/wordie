@@ -134,9 +134,10 @@ class Dashboard extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        isExtended: true,
         tooltip: 'Add Note',
-        backgroundColor: WordieConstants.mainColor,
-        foregroundColor: WordieConstants.backgroundColor,
+        backgroundColor: WordieConstants.containerColor,
+        foregroundColor: WordieConstants.mainColor,
         splashColor: WordieConstants.backgroundColor,
         onPressed: () {
           context.goNamed(AddNoteScreen.routeName);

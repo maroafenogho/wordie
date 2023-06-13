@@ -15,6 +15,7 @@ class NoteDetailsScreen extends ConsumerWidget {
   static const routeName = 'note_details';
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,6 +35,7 @@ class NoteDetailsScreen extends ConsumerWidget {
         leading: InkWell(
           onTap: () {
             context.pop();
+            _focusNode.dispose();
             checkNoteUpdate(
               ref: ref,
               selectedNote: selectedNote,
@@ -92,8 +94,20 @@ class NoteDetailsScreen extends ConsumerWidget {
           20.0.hSpace
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _focusNode.requestFocus();
+        },
+        tooltip: 'Edit Note',
+        backgroundColor: WordieConstants.containerColor,
+        foregroundColor: WordieConstants.mainColor,
+        splashColor: WordieConstants.backgroundColor,
+        child: const Icon(Icons.edit_note),
+      ),
       body: BackButtonListener(
         onBackButtonPressed: () {
+          _focusNode.dispose();
+
           checkNoteUpdate(
               ref: ref, selectedNote: selectedNote, currentUser: currentUser);
           return Future.delayed(const Duration(seconds: 0));
@@ -116,11 +130,11 @@ class NoteDetailsScreen extends ConsumerWidget {
                 ),
               ),
               // Text(selectedNote.title, style: WordieTypography.h1),
-
               Expanded(
                 flex: 9,
                 child: TextField(
                   controller: bodyController,
+                  focusNode: _focusNode,
                   scrollPhysics: const AlwaysScrollableScrollPhysics(),
                   keyboardType: TextInputType.multiline,
                   minLines: null,
