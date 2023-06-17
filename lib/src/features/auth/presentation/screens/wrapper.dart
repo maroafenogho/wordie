@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/home/presentation/screens/home.dart';
 

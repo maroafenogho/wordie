@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/home/presentation/controllers/note_list.dart';
 import 'package:wordie/src/features/home/presentation/screens/widgets/gridview.dart';
 import 'package:wordie/src/features/home/presentation/screens/widgets/listview.dart';
@@ -37,36 +37,38 @@ class Favourites extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              (favNotesList != null && favNotesList.isEmpty)
-                  ? SizedBox(
-                      height: size.height * 0.7,
-                      width: size.width,
-                      child: const Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.note_add,
-                            size: 50,
-                            color: WordieConstants.containerColor,
-                          ),
-                          Text(
-                            'You do not have any favourite notes.\nTap on the heart icon on the dashboard if you want to add a note.',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      )))
-                  : displayType == 'list'
-                      ? NotesListView(
-                          ref: ref,
-                          currentUser: currentUser,
-                          notesList: favNotesList!,
-                          size: size)
-                      : NotesGridView(
-                          ref: ref,
-                          currentUser: currentUser,
-                          notesList: favNotesList!,
-                          size: size)
+              ref.watch(notesListProvider).isLoading
+                  ? const LinearProgressIndicator()
+                  : (favNotesList != null && favNotesList.isNotEmpty)
+                      ? displayType == 'list'
+                          ? NotesListView(
+                              ref: ref,
+                              currentUser: currentUser,
+                              notesList: favNotesList,
+                              size: size)
+                          : NotesGridView(
+                              ref: ref,
+                              currentUser: currentUser,
+                              notesList: favNotesList,
+                              size: size)
+                      : SizedBox(
+                          height: size.height * 0.7,
+                          width: size.width,
+                          child: const Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.note_add,
+                                size: 50,
+                                color: WordieConstants.containerColor,
+                              ),
+                              Text(
+                                'You do not have any favourite notes.\nTap on the heart icon on the dashboard if you want to add a note.',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )))
             ],
           ),
         ),

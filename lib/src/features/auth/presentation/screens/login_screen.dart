@@ -9,6 +9,7 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
 import 'package:wordie/src/features/home/presentation/screens/home.dart';

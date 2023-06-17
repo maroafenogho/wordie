@@ -31,6 +31,7 @@ class AuthService {
         await logout()
             .then((value) => throw Exception('Unverified email address'));
       }
+   
       return _userFromFirebase(credential.user);
     } on auth.FirebaseAuthException catch (error) {
       log(error.toString());

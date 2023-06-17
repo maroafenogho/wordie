@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
 
 final asyncUpdateFavProvider =
