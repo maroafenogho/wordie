@@ -28,7 +28,7 @@ The app uses the riverpod folder structure:
 
 <a href="https://pub.dev/packages/flutter_riverpod">Riverpod</a> is used for state management, <a href="https://pub.dev/packages/go_router">go_router</a> for navigation, firebase for authentication and realtime database.
 
-Each <strong>service.dart</strong> file contains code to query Firebase or carry out authentication calls. The data retrieved fron the network call is parsed to the <strong>repo.dart</strong> class.The controller class receives the data from the repo and in turn determines what the user sees.
+Each <strong>service.dart</strong> file contains code to query Firebase or carry out authentication calls. The data retrieved fron the network call is parsed to the <strong>repo.dart</strong> class. The controller class receives the data from the repo and in turn determines what the user sees.
 
 ### User Authentication
 <img src="./sign_up_screen.jpg">

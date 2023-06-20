@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 
 class AuthService {
-  final _firebaseAuth = auth.FirebaseAuth.instance;
+  // final _firebaseAuth = auth.FirebaseAuth.instance;
 
   User? _userFromFirebase(auth.User? user) {
     if (user != null) {
@@ -19,19 +21,19 @@ class AuthService {
     }
   }
 
-  Stream<User?> get currentUser {
-    return _firebaseAuth.authStateChanges().map(_userFromFirebase);
+  Stream<User?> currentUser(Ref ref) {
+    return ref.watch(fbAuthProvider).authStateChanges().map(_userFromFirebase);
   }
 
-  Future<User?> login(String email, String password) async {
+  Future<User?> login(String email, String password, Ref ref) async {
     try {
-      final credential = await _firebaseAuth.signInWithEmailAndPassword(
+      final credential = await ref.watch(fbAuthProvider).signInWithEmailAndPassword(
           email: email, password: password);
       if (!credential.user!.emailVerified) {
-        await logout()
+        await logout(ref)
             .then((value) => throw Exception('Unverified email address'));
       }
-   
+
       return _userFromFirebase(credential.user);
     } on auth.FirebaseAuthException catch (error) {
       log(error.toString());
@@ -39,10 +41,10 @@ class AuthService {
     }
   }
 
-  Future<bool> logout() async {
+  Future<bool> logout(Ref ref) async {
     bool success = false;
     try {
-      await _firebaseAuth.signOut();
+      await ref.watch(fbAuthProvider).signOut();
 
       success = true;
     } catch (error) {
@@ -55,9 +57,10 @@ class AuthService {
       {required String email,
       required String password,
       required String firstName,
-      required String lastName}) async {
+      required String lastName,
+      required Ref ref}) async {
     try {
-      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+      final credential = await ref.watch(fbAuthProvider).createUserWithEmailAndPassword(
           email: email, password: password);
 
       await credential.user!.updateDisplayName('$firstName $lastName');
