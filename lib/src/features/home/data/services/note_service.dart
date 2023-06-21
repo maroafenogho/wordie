@@ -28,30 +28,19 @@ class NoteService {
     return success;
   }
 
-  List<Note> _listFromFirebase(DatabaseEvent event) {
-    final list = <Note>[];
-    if (event.snapshot.value != null) {
-      Map<dynamic, dynamic> map = event.snapshot.value as Map;
-
-      map.forEach((key, value) {
-        log(value.toString());
-        list.add(Note.fromMap(value));
-      });
-    }
-
-    return list;
-  }
-
   Stream<List<Note>> getNotesStream(String userId, Ref ref) {
+    final list = <Note>[];
     final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/notes');
-    return dbRef.onValue.map(_listFromFirebase);
-    // dbRef.onValue.listen((event) {
-    //   Map<dynamic, dynamic> map = event.snapshot.value as Map;
-    //   map.forEach((key, value) {
-    //     log(value.toString());
-    //     list.add(Note.fromMap(value));
-    //   });
-    // });
+    return dbRef.onValue.map((event) {
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic> map = event.snapshot.value as Map;
+        map.forEach((key, value) {
+          log(value.toString());
+          list.add(Note.fromMap(value));
+        });
+      }
+      return list;
+    });
   }
 
   Future<bool> updateNote(

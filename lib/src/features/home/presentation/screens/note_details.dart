@@ -37,7 +37,12 @@ class NoteDetailsScreen extends ConsumerWidget {
         leading: InkWell(
           onTap: () {
             context.pop();
-            _focusNode.dispose();
+            _focusNode.hasPrimaryFocus
+                ? () {
+                    _focusNode.unfocus();
+                    _focusNode.dispose();
+                  }
+                : () {};
             checkNoteUpdate(
               ref: ref,
               selectedNote: selectedNote,
