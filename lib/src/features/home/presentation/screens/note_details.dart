@@ -64,7 +64,7 @@ class NoteDetailsScreen extends ConsumerWidget {
                         .read(asyncDeleteNoteProvider.notifier)
                         .deleteNote(
                             userId: currentUser.value!.userId,
-                            oldTitle: ref.watch(selectedNoteProvider).title);
+                            noteId: ref.watch(selectedNoteProvider).noteId);
                     if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Deleted'),
@@ -168,13 +168,13 @@ class NoteDetailsScreen extends ConsumerWidget {
             bodyController.text.trim() != selectedNote.body)) {
       ref.read(asyncUpdateProvider.notifier).updateNote(
           userId: ref.watch(currentUserProvider).value!.userId,
-          oldTitle: selectedNote.title,
+          noteId: selectedNote.noteId,
           newTitle: titleController.text.trim(),
           newBody: bodyController.text.trim());
     } else if (titleController.text.isEmpty && bodyController.text.isEmpty) {
       ref.read(asyncDeleteNoteProvider.notifier).deleteNote(
           userId: currentUser.value!.userId,
-          oldTitle: ref.watch(selectedNoteProvider).title);
+          noteId: ref.watch(selectedNoteProvider).noteId);
     }
   }
 }

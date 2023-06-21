@@ -9,13 +9,16 @@ class NoteRepo {
   NoteRepo({NoteService? service, required this.ref})
       : _noteService = service ?? NoteService();
 
-
   Future<bool> createNote(
       {required String userId,
       required String noteTitle,
       required String noteBody}) async {
     return _noteService.createNote(
-        ref: ref, userId: userId, noteTitle: noteTitle, noteBody: noteBody);
+        ref: ref,
+        userId: userId,
+        noteTitle: noteTitle,
+        noteBody: noteBody,
+        noteId: DateTime.now().millisecondsSinceEpoch.toString());
   }
 
   Stream<List<Note>> getNotesStream(String userId) {
@@ -24,30 +27,29 @@ class NoteRepo {
 
   Future<bool> updateFavNote({
     required String userId,
-    required String oldTitle,
+    required String noteId,
     required bool isFav,
   }) async {
     return _noteService.updateFavNote(
-        userId: userId, oldTitle: oldTitle, isFav: isFav, ref: ref);
+        userId: userId, noteId: noteId, isFav: isFav, ref: ref);
   }
 
   Future<bool> deleteNote({
     required String userId,
-    required String oldTitle,
+    required String noteId,
   }) async {
-    return _noteService.deleteNote(
-        userId: userId, oldTitle: oldTitle, ref: ref);
+    return _noteService.deleteNote(userId: userId, noteId: noteId, ref: ref);
   }
 
   Future<bool> updateNote({
     required String userId,
-    required String oldTitle,
+    required String noteId,
     required String newTitle,
     required String newBody,
   }) {
     return _noteService.updateNote(
         userId: userId,
-        oldTitle: oldTitle,
+        noteId: noteId,
         newTitle: newTitle,
         newBody: newBody,
         ref: ref);

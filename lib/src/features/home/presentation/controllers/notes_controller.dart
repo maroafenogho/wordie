@@ -7,6 +7,11 @@ final firebaseDbRefProvider = Provider((ref) => FirebaseDatabase.instance);
 
 final firebaseDbInstance = Provider((ref) => FirebaseDatabase.instance);
 
-final selectedNoteProvider = StateProvider((ref) =>
-    Note(title: '', body: '', created: '', updated: '', isFavorite: false));
+final selectedNoteProvider = StateProvider((ref) => Note(
+    title: '',
+    body: '',
+    created: '',
+    updated: '',
+    isFavorite: false,
+    noteId: ''));
 final notesRepoProvider = Provider((ref) => NoteRepo(ref: ref));

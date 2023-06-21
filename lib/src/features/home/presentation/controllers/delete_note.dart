@@ -18,14 +18,14 @@ class AsyncDeleteNoteNotifier extends AsyncNotifier<bool> {
 
   Future<bool> deleteNote({
     required String userId,
-    required String oldTitle,
+    required String noteId,
   }) async {
     bool success = false;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       success = await ref.read(notesRepoProvider).deleteNote(
             userId: userId,
-            oldTitle: oldTitle,
+            noteId: noteId,
           );
       return success;
     });

@@ -69,7 +69,7 @@ class EditNoteScreen extends ConsumerWidget {
                       .read(asyncUpdateProvider.notifier)
                       .updateNote(
                           userId: ref.watch(currentUserProvider).value!.userId,
-                          oldTitle: selectedNote.title,
+                          noteId: selectedNote.title,
                           newTitle: titleController.text.trim(),
                           newBody: bodyController.text.trim());
 

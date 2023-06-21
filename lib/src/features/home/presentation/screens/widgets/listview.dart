@@ -79,7 +79,7 @@ class NotesListView extends StatelessWidget {
                       bool success = await ref
                           .read(asyncUpdateFavProvider.notifier)
                           .updateFavNote(
-                              oldTitle: notesList[index].title,
+                              noteId: notesList[index].title,
                               isFav: !notesList[index].isFavorite);
                       if (success) {
                         showSnackbar(

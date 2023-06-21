@@ -17,13 +17,13 @@ class AsyncUpdateFavNoteNotifier extends AsyncNotifier<bool> {
   }
 
   Future<bool> updateFavNote(
-      {required String oldTitle, required bool isFav}) async {
+      {required String noteId, required bool isFav}) async {
     bool success = false;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       success = await ref.read(notesRepoProvider).updateFavNote(
           userId: ref.watch(currentUserProvider).value!.userId,
-          oldTitle: oldTitle,
+          noteId: noteId,
           isFav: isFav);
       return success;
     });

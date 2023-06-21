@@ -17,7 +17,7 @@ class AsyncUpdateNoteNotifier extends AsyncNotifier<bool> {
 
   Future<bool> updateNote({
     required String userId,
-    required String oldTitle,
+    required String noteId,
     required String newTitle,
     required String newBody,
   }) async {
@@ -25,10 +25,7 @@ class AsyncUpdateNoteNotifier extends AsyncNotifier<bool> {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       success = await ref.read(notesRepoProvider).updateNote(
-          userId: userId,
-          oldTitle: oldTitle,
-          newTitle: newTitle,
-          newBody: newBody);
+          userId: userId, noteId: noteId, newTitle: newTitle, newBody: newBody);
       return success;
     });
     if (state.hasError) {
