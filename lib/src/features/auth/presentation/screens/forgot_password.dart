@@ -9,7 +9,6 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/forgot_password_controller.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
 import 'package:wordie/src/utils/utils.dart';
@@ -51,12 +50,13 @@ class ResetPasswordScreen extends ConsumerWidget {
                 style: WordieTypography.h4,
               ),
             ),
+            20.0.vSpace,
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Enter your email address below to receive a password reset code',
                 textAlign: TextAlign.start,
-                style: WordieTypography.bodyText14,
+                style: WordieTypography.bodyText12,
               ),
             ),
             10.0.vSpace,
@@ -72,7 +72,7 @@ class ResetPasswordScreen extends ConsumerWidget {
             30.0.vSpace,
             WordieButton(
               text: 'reset',
-              isLoading: ref.watch(asyncLoginProvider).isLoading,
+              isLoading: ref.watch(asyncResetPasswordProvider).isLoading,
               onPressed: () async {
                 if (emailController.text.isNotEmpty) {
                   final success = await ref
@@ -82,15 +82,25 @@ class ResetPasswordScreen extends ConsumerWidget {
                       );
 
                   if (success) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text(
-                        ref.watch(asyncLoginProvider).error.toString(),
+                        'Password reset email sent!\nPlease check your email for instructions.',
                         style: WordieTypography.bodyText14,
                       ),
                       dismissDirection: DismissDirection.up,
                       backgroundColor: WordieConstants.containerColor,
                     ));
-                  } else {}
+                    context.pop();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        ref.watch(asyncResetPasswordProvider).error.toString(),
+                        style: WordieTypography.bodyText14,
+                      ),
+                      dismissDirection: DismissDirection.up,
+                      backgroundColor: WordieConstants.containerColor,
+                    ));
+                  }
                 } else {
                   showSnackbar('Please fill email text field', context);
                 }

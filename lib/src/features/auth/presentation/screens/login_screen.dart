@@ -10,6 +10,7 @@ import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/word_extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
+import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
 import 'package:wordie/src/features/home/presentation/screens/home.dart';
@@ -116,17 +117,35 @@ class LoginScreen extends ConsumerWidget {
               },
             ),
             30.0.vSpace,
-            Text.rich(TextSpan(
-                text: 'Don\'t have an account? ',
-                style: WordieTypography.bodyText12,
-                children: [
-                  TextSpan(
-                      text: 'Sign up',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.goNamed(SignUpScreen.routeName),
-                      style: WordieTypography.h6.copyWith(
-                          color: const Color.fromARGB(255, 48, 167, 251)))
-                ])),
+            Text.rich(
+              TextSpan(
+                  text: 'Forgot Password? ',
+                  style: WordieTypography.bodyText12,
+                  children: [
+                    TextSpan(
+                        text: 'Reset',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              context.goNamed(ResetPasswordScreen.routeName),
+                        style: WordieTypography.h6.copyWith(
+                            color: const Color.fromARGB(255, 48, 167, 251)))
+                  ]),
+            ),
+            10.0.vSpace,
+            Text.rich(
+              TextSpan(
+                  text: 'Don\'t have an account? ',
+                  style: WordieTypography.bodyText12,
+                  children: [
+                    TextSpan(
+                        text: 'Sign up',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap =
+                              () => context.goNamed(SignUpScreen.routeName),
+                        style: WordieTypography.h6.copyWith(
+                            color: const Color.fromARGB(255, 48, 167, 251)))
+                  ]),
+            ),
           ],
         ),
       ),
