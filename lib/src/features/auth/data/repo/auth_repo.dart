@@ -29,6 +29,10 @@ class AuthRepo {
     return _authService.logout(ref);
   }
 
+  Future<bool> resetPassword(String email) async {
+    return _authService.resetPassword(ref, email);
+  }
+
   Stream<User?> get currentUser {
     return _authService.currentUser(ref);
   }

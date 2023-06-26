@@ -27,8 +27,9 @@ class AuthService {
 
   Future<User?> login(String email, String password, Ref ref) async {
     try {
-      final credential = await ref.watch(fbAuthProvider).signInWithEmailAndPassword(
-          email: email, password: password);
+      final credential = await ref
+          .watch(fbAuthProvider)
+          .signInWithEmailAndPassword(email: email, password: password);
       if (!credential.user!.emailVerified) {
         await logout(ref)
             .then((value) => throw Exception('Unverified email address'));
@@ -53,6 +54,18 @@ class AuthService {
     return success;
   }
 
+  Future<bool> resetPassword(Ref ref, String email) async {
+    bool success = false;
+    try {
+      await ref.watch(fbAuthProvider).sendPasswordResetEmail(email: email);
+      success = true;
+    } catch (error) {
+      log(error.toString());
+      throw Exception(error);
+    }
+    return success;
+  }
+
   Future<User?> createUser(
       {required String email,
       required String password,
@@ -60,8 +73,9 @@ class AuthService {
       required String lastName,
       required Ref ref}) async {
     try {
-      final credential = await ref.watch(fbAuthProvider).createUserWithEmailAndPassword(
-          email: email, password: password);
+      final credential = await ref
+          .watch(fbAuthProvider)
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       await credential.user!.updateDisplayName('$firstName $lastName');
 

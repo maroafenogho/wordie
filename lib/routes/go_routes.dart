@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
@@ -21,10 +22,16 @@ final GoRouter routes =
     builder: (context, state) => SignUpScreen(),
   ),
   GoRoute(
-    name: LoginScreen.routeName,
-    path: LoginScreen.routeName,
-    builder: (context, state) => LoginScreen(),
-  ),
+      name: LoginScreen.routeName,
+      path: LoginScreen.routeName,
+      builder: (context, state) => LoginScreen(),
+      routes: [
+        GoRoute(
+          name: ResetPasswordScreen.routeName,
+          path: ResetPasswordScreen.routeName,
+          builder: (context, state) => ResetPasswordScreen(),
+        ),
+      ]),
   GoRoute(
       name: HomeScreen.routeName,
       path: HomeScreen.routeName,
