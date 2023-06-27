@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/logout_controller.dart';
+import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
@@ -26,13 +28,11 @@ class AccountScreen extends ConsumerWidget {
           ),
           TextButton(
               onPressed: () async {
-                await ref.watch(asyncLogoutProvider.notifier).logout();
-
-                //bool success =
-                //     await ref.watch(asyncLogoutProvider.notifier).logout();
-                // if (success) {
-                //   // context.goNamed(LoginScreen.routeName);
-                // }
+                bool success =
+                    await ref.watch(asyncLogoutProvider.notifier).logout();
+                if (success) {
+                  context.goNamed(LoginScreen.routeName);
+                }
               },
               child: const Text('Logout'))
         ],
