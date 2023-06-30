@@ -17,7 +17,7 @@ Run the app to confirm that everything works
 
 ## App Features
 
-The app uses the riverpod folder structure:
+The app uses the feature-first architecture. The folder structure for the project is:
 
     lib/src/features/📁data
                            /📁services/note_service.dart
@@ -47,11 +47,11 @@ User registration is achieved by using the *createUserWithEmailAndPassword()* me
  <img src="./del.jpg">
 
 # What you can learn from this repo
-1. Riverpod state management and overrides
+1. Riverpod state management and dependency overrides
 2. go_router
 3. Custom widgets
 4. Firebase authentication
 5. Firebase database
-6. Riverpod Architecture
+6. Feature-first Architecture
 7. Shared preferences
 8. Dart extension and more
