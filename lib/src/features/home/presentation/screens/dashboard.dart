@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
-import 'package:wordie/src/extensions/word_extensions.dart';
+import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/home/presentation/controllers/note_list.dart';
 import 'package:wordie/src/features/home/presentation/screens/add_note.dart';

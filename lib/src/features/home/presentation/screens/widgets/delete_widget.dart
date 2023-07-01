@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
-import 'package:wordie/src/extensions/word_extensions.dart';
+import 'package:wordie/src/extensions/extensions.dart';
 
 class DeleteBottomSheet extends StatelessWidget {
   const DeleteBottomSheet({

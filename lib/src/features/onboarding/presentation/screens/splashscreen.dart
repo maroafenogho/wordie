@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
-import 'package:wordie/src/extensions/word_extensions.dart';
+import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
 
 class Splashscreen extends StatefulWidget {

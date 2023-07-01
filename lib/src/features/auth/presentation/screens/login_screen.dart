@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
-import 'package:wordie/src/extensions/word_extensions.dart';
+import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
