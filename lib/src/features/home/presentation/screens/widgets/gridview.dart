@@ -37,20 +37,23 @@ class NotesGridView extends StatelessWidget {
         onTap: () {
           ref.read(selectedNoteProvider.notifier).state = notesList[index];
 
-          context.goNamed(NoteDetailsScreen.routeName);
+          context.goNamed(NoteDetailsScreen.routeName, pathParameters: {
+            'title': ref.read(selectedNoteProvider).title,
+            'body': ref.read(selectedNoteProvider).body
+          });
         },
-        child: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              decoration: BoxDecoration(
-                  color: WordieConstants.containerColor,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: 30.0.cRadius,
-                    topLeft: 30.0.cRadius,
-                  )),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+          decoration: BoxDecoration(
+              color: WordieConstants.containerColor,
+              borderRadius: BorderRadius.only(
+                bottomRight: 30.0.cRadius,
+                topLeft: 30.0.cRadius,
+              )),
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -59,68 +62,62 @@ class NotesGridView extends StatelessWidget {
                     softWrap: true,
                     style: WordieTypography.h4,
                   ),
-                  // Text(
-                  //   data[index].body,
-                  //   maxLines: 2,
-                  //   overflow: TextOverflow.ellipsis,
-                  //   style: WordieTypography.bodyText16,
-                  // ),
+                  10.0.vSpace,
                   Text(
                     'Last updated:\n${notesList[index].updated.dateFromString}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: WordieTypography.bodyText10,
                   ),
-                  const Divider(),
                 ],
               ),
-            ),
-            Positioned(
-              top: 5,
-              right: 5,
-              child: InkWell(
-                onTap: () async {
-                  bool success = await ref
-                      .read(asyncUpdateFavProvider.notifier)
-                      .updateFavNote(
-                          noteId: notesList[index].noteId,
-                          isFav: !notesList[index].isFavorite);
-                  if (success) {
-                    showSnackbar(
-                        notesList[index].isFavorite
-                            ? 'Removed to fovourites'
-                            : 'Added to fovourites',
-                        context);
-                  } else {
-                    showSnackbar(
-                        ref.watch(asyncUpdateFavProvider).error.toString(),
-                        context);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, border: Border.all()),
-                  child: Icon(
-                    notesList[index].isFavorite
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    size: 20,
+              Positioned(
+                bottom: 5,
+                right: 5,
+                child: InkWell(
+                  onTap: () async {
+                    bool success = await ref
+                        .read(asyncUpdateFavProvider.notifier)
+                        .updateFavNote(
+                            noteId: notesList[index].noteId,
+                            isFav: !notesList[index].isFavorite);
+                    if (success) {
+                      showSnackbar(
+                          notesList[index].isFavorite
+                              ? 'Removed to fovourites'
+                              : 'Added to fovourites',
+                          context);
+                    } else {
+                      showSnackbar(
+                          ref.watch(asyncUpdateFavProvider).error.toString(),
+                          context);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, border: Border.all()),
+                    child: Icon(
+                      notesList[index].isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      size: 20,
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ),
+              )
+            ],
+          ),
+        ).animate().fadeIn(),
       ),
       itemCount: notesList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
         crossAxisCount: 2,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1.2,
       ),
-    ).animate().flip();
+    );
   }
 }

@@ -9,6 +9,7 @@ class NoteService {
   Future<bool> createNote(
       {required Ref ref,
       required String userId,
+      String? category,
       required String noteTitle,
       required String noteId,
       required String noteBody}) async {
@@ -23,6 +24,22 @@ class NoteService {
         'note_id': noteId,
         'updated': DateTime.now().toString()
       });
+      success = true;
+    } catch (e) {
+      success = false;
+    }
+    return success;
+  }
+
+  Future<bool> addCategory({
+    required Ref ref,
+    required String userId,
+    String? category,
+  }) async {
+    bool success = false;
+    final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/categories');
+
+    try {
       success = true;
     } catch (e) {
       success = false;
