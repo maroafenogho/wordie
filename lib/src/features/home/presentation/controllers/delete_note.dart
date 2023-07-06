@@ -6,11 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'notes_controller.dart';
 
 final asyncDeleteNoteProvider =
-    AsyncNotifierProvider<AsyncDeleteNoteNotifier, bool>(
+    AutoDisposeAsyncNotifierProvider<AsyncDeleteNoteNotifier, bool>(
   () => AsyncDeleteNoteNotifier(),
 );
 
-class AsyncDeleteNoteNotifier extends AsyncNotifier<bool> {
+class AsyncDeleteNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
     throw UnimplementedError();

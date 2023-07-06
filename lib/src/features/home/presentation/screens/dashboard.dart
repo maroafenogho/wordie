@@ -120,7 +120,8 @@ class Dashboard extends ConsumerWidget {
                             ref: ref,
                             currentUser: currentUser,
                             notesList: data.orderedByDate,
-                            size: size)
+                            size: size,
+                          )
                         : NotesGridView(
                             ref: ref,
                             currentUser: currentUser,

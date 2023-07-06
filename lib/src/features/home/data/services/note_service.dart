@@ -31,21 +31,23 @@ class NoteService {
     return success;
   }
 
-  Future<bool> addCategory({
-    required Ref ref,
-    required String userId,
-    String? category,
-  }) async {
-    bool success = false;
-    final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/categories');
-
-    try {
-      success = true;
-    } catch (e) {
-      success = false;
-    }
-    return success;
-  }
+  // Future<bool> addCategory({
+  //   required Ref ref,
+  //   required String userId,
+  //   String? category,
+  // }) async {
+  //   bool success = false;
+  //   final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/categories');
+  //   try {
+  //     await dbRef.child(category).set
+  //   }
+  //   try {
+  //     success = true;
+  //   } catch (e) {
+  //     success = false;
+  //   }
+  //   return success;
+  // }
 
   List<Note> _listFromFirebase(DatabaseEvent event) {
     final list = <Note>[];

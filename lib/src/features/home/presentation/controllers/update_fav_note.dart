@@ -6,11 +6,11 @@ import 'package:wordie/src/features/auth/presentation/controllers/current_user.d
 import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
 
 final asyncUpdateFavProvider =
-    AsyncNotifierProvider<AsyncUpdateFavNoteNotifier, bool>(
+    AutoDisposeAsyncNotifierProvider<AsyncUpdateFavNoteNotifier, bool>(
   () => AsyncUpdateFavNoteNotifier(),
 );
 
-class AsyncUpdateFavNoteNotifier extends AsyncNotifier<bool> {
+class AsyncUpdateFavNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
     throw UnimplementedError();

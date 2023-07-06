@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
 
 final asyncAddNoteProvider =
-    AsyncNotifierProvider<AsyncCreateNoteNotifier, bool>(
+    AutoDisposeAsyncNotifierProvider<AsyncCreateNoteNotifier, bool>(
   () => AsyncCreateNoteNotifier(),
 );
 
-class AsyncCreateNoteNotifier extends AsyncNotifier<bool> {
+class AsyncCreateNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
     throw UnimplementedError();
