@@ -28,11 +28,10 @@ class AccountScreen extends ConsumerWidget {
           ),
           TextButton(
               onPressed: () async {
-                bool success =
-                    await ref.watch(asyncLogoutProvider.notifier).logout();
-                if (success) {
-                  context.goNamed(LoginScreen.routeName);
-                }
+                await ref.watch(asyncLogoutProvider.notifier).logout();
+                // if (success) {
+                //   context.goNamed(LoginScreen.routeName);
+                // }
               },
               child: const Text('Logout'))
         ],

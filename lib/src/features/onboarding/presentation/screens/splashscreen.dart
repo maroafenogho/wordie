@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
+import 'package:wordie/src/routes/app_router.dart';
 
 class Splashscreen extends StatefulWidget {
-  const Splashscreen({super.key});
+  const Splashscreen({required this.loggedIn, super.key});
+  final bool loggedIn;
 
   static const routeName = '/splashscreen';
 
@@ -18,9 +19,14 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 5), () {
-      context.goNamed(Wrapper.routeName);
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted) {
+        widget.loggedIn
+            ? context.goNamed(AppRoute.notes.name)
+            : context.goNamed(AppRoute.signIn.name);
+      }
     });
+
     super.initState();
   }
 

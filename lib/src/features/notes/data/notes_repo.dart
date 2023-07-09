@@ -1,22 +1,23 @@
-import 'dart:developer';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:wordie/src/features/home/domain/note.dart';
-import 'package:wordie/src/features/home/presentation/controllers/notes_controller.dart';
 
-import '../../../notes/domain/user_note.dart';
+import '../domain/user_note.dart';
 
-class NoteService {
+class NotesRepository {
+  NotesRepository(this._firebaseDbRef);
+
+  final FirebaseDatabase _firebaseDbRef;
+
+  String userNotesEntry(String userId) => 'notes/$userId/notes';
+
   Future<bool> createNote(
-      {required Ref ref,
-      required String userId,
+      {required String userId,
       String? category,
       required String noteTitle,
       required String noteId,
       required String noteBody}) async {
     bool success = false;
-    final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/notes');
+    final dbRef = _firebaseDbRef.ref(userNotesEntry(userId));
     try {
       await dbRef.child(noteId).set({
         'title': noteTitle,
@@ -55,16 +56,16 @@ class NoteService {
     final list = <Note>[];
     if (event.snapshot.value != null) {
       Map<dynamic, dynamic> map = event.snapshot.value as Map;
+
       map.forEach((key, value) {
-        log(value.toString());
         list.add(Note.fromMap(value));
       });
     }
     return list;
   }
 
-  Stream<List<Note>> getNotesStream(String userId, Ref ref) {
-    final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/notes');
+  Stream<List<Note>> getNotesStream(String userId) {
+    final dbRef = _firebaseDbRef.ref(userNotesEntry(userId));
     return dbRef.onValue.map(_listFromFirebase);
   }
 
@@ -72,11 +73,9 @@ class NoteService {
       {required String userId,
       required String noteId,
       required String newTitle,
-      required String newBody,
-      required Ref ref}) async {
+      required String newBody}) async {
     bool success = false;
-    final dbRef =
-        ref.watch(firebaseDbInstance).ref('notes/$userId/notes/$noteId');
+    final dbRef = _firebaseDbRef.ref('${userNotesEntry(userId)}/$noteId');
     try {
       await dbRef.update({
         'title': newTitle,
@@ -93,11 +92,9 @@ class NoteService {
   Future<bool> updateFavNote(
       {required String userId,
       required String noteId,
-      required bool isFav,
-      required Ref ref}) async {
+      required bool isFav}) async {
     bool success = false;
-    final dbRef =
-        ref.watch(firebaseDbInstance).ref('notes/$userId/notes/$noteId');
+    final dbRef = _firebaseDbRef.ref('${userNotesEntry(userId)}/$noteId');
     try {
       await dbRef
           .update({'is_favorite': isFav, 'updated': DateTime.now().toString()});
@@ -109,12 +106,9 @@ class NoteService {
   }
 
   Future<bool> deleteNote(
-      {required String userId,
-      required String noteId,
-      required Ref ref}) async {
+      {required String userId, required String noteId}) async {
     bool success = false;
-    final dbRef =
-        ref.watch(firebaseDbInstance).ref('notes/$userId/notes/$noteId');
+    final dbRef = _firebaseDbRef.ref('${userNotesEntry(userId)}/$noteId');
     try {
       await dbRef.remove();
       success = true;
@@ -123,28 +117,9 @@ class NoteService {
     }
     return success;
   }
-
-  Future<List<Note>> getNotes(String userId, Ref ref) async {
-    final list = <Note>[];
-    final dbRef = ref.watch(firebaseDbInstance).ref('notes/$userId/notes');
-    dbRef.onValue.listen((event) => event.snapshot.value!);
-    // final snapshot = await dbRef.once();
-    // Map values = snapshot.snapshot.value!;
-    await dbRef.once().then((value) {
-      Map<dynamic, dynamic> map = value.snapshot.value as Map;
-      map.forEach((key, value) {
-        log(value.toString());
-        list.add(Note.fromMap(value));
-      });
-      // for (final note in value.snapshot.value) {
-      //   list.add(Note.fromMap(note));
-      // }
-      value.snapshot.value;
-    });
-    // print(snapshot.snapshot.value);
-    // for (final note in snapshot.snapshot.children) {
-    //   list.add(Note.fromMap(note.));
-    // }
-    return list;
-  }
 }
+
+final firebaseDbProvider = Provider((ref) => FirebaseDatabase.instance);
+
+final notesRepositoryProvider =
+    Provider((ref) => NotesRepository(ref.watch(firebaseDbProvider)));

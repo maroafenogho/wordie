@@ -12,6 +12,6 @@ class UserNotifier extends StreamNotifier<User?> {
   }
 
   Stream<User?> getCurrentUser() {
-    return ref.read(authRepoProvider).currentUser;
+    return ref.watch(authRepoProvider).currentUser;
   }
 }

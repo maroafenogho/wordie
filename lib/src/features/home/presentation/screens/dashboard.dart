@@ -119,13 +119,13 @@ class Dashboard extends ConsumerWidget {
                         ? NotesListView(
                             ref: ref,
                             currentUser: currentUser,
-                            notesList: data.orderedByDate,
+                            notesList: data,
                             size: size,
                           )
                         : NotesGridView(
                             ref: ref,
                             currentUser: currentUser,
-                            notesList: data.orderedByDate,
+                            notesList: data,
                             size: size),
                 error: (error, stackTrace) => const CircularProgressIndicator(),
                 loading: () => const LinearProgressIndicator(),

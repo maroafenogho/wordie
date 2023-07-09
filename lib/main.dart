@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wordie/routes/go_routes.dart';
+import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/common/constants.dart';
 
 import 'firebase_options.dart';
@@ -29,16 +29,21 @@ class MyApp extends StatelessWidget {
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: MaterialApp.router(
-        title: 'Wordie',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: WordieConstants.mainColor,
-          ),
-          useMaterial3: true,
-        ),
-        debugShowCheckedModeBanner: false,
-        routerConfig: routes,
+      child: Consumer(
+        builder: (context, ref, child) {
+          final routes = ref.watch(goRouterProvider);
+          return MaterialApp.router(
+            title: 'Wordie',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: WordieConstants.mainColor,
+              ),
+              useMaterial3: true,
+            ),
+            debugShowCheckedModeBanner: false,
+            routerConfig: routes,
+          );
+        },
       ),
     );
   }

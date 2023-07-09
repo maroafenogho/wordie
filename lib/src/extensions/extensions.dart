@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wordie/src/common/constants.dart';
-import 'package:wordie/src/features/home/domain/note.dart';
+
+import '../features/notes/domain/user_note.dart';
+// import 'package:wordie/src/features/home/domain/note.dart';
 
 extension WordLength on String {
   int get wordLength => length;

@@ -11,10 +11,9 @@ import 'package:wordie/src/features/auth/domain/user.dart';
 // import 'package:wordie/src/features/home/domain/note.dart';
 import 'package:wordie/src/features/home/presentation/controllers/delete_note.dart';
 import 'package:wordie/src/features/home/presentation/controllers/update_fav_note.dart';
+import 'package:wordie/src/features/notes/domain/user_note.dart';
 import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
-
-import '../../../../notes/domain/user_note.dart';
 
 class NotesListView extends StatelessWidget {
   const NotesListView({
