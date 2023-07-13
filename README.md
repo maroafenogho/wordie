@@ -17,18 +17,21 @@ Run the app to confirm that everything works
 
 ## App Features
 
-The app uses the feature-first architecture. The folder structure for the project is:
+The app uses the Riverpod Architechture as proposed by Andrea together with the feature first approach. The folder structure for the project is:
 
     lib/src/features/📁data
-                           /📁services/note_service.dart
                            /📁repository/note_repo.dart
-                    /📁domain/note_model.dart
-                    /📁presentation/📁screens/note_screen.dart
-                                   /📁controllers/note_controller.dart
+                    /📁application
+                           /📁services/note_service.dart
+                    /📁domain
+                          /note_model.dart
+                    /📁presentation
+                         /📁screens/note_screen.dart
+                         /📁controllers/note_controller.dart
 
 <a href="https://pub.dev/packages/flutter_riverpod">Riverpod</a> is used for state management, <a href="https://pub.dev/packages/go_router">go_router</a> for navigation, firebase for authentication and realtime database.
 
-Each <strong>service.dart</strong> file contains code to query Firebase or carry out authentication calls. The data retrieved fron the network call is parsed to the <strong>repo.dart</strong> class. The controller class receives the data from the repo and in turn determines what the user sees.
+Each <strong>/📁data/repo.dart</strong> file contains code to query Firebase or carry out authentication calls. The data retrieved fron the network call is parsed to the <strong>/📁application/service.dart</strong> class. The controller class receives the data from the service class and uses the data to update state.
 
 ### User Authentication
 <img src="./sign_up_screen.jpg">
