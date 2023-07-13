@@ -5,9 +5,9 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
-import 'package:wordie/src/features/home/presentation/screens/widgets/gridview.dart';
-import 'package:wordie/src/features/home/presentation/screens/widgets/listview.dart';
 import 'package:wordie/src/features/notes/presentation/controllers/notes_controller.dart';
+import 'package:wordie/src/features/notes/presentation/widgets/gridview.dart';
+import 'package:wordie/src/features/notes/presentation/widgets/listview.dart';
 import 'package:wordie/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:wordie/src/routes/app_router.dart';
 

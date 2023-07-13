@@ -16,6 +16,17 @@ class UserNotesService {
     return getNotesList(userId)
         .map((event) => event.where((element) => element.isFavorite).toList());
   }
+
+  Future<bool> createNote(
+      {required String userId,
+      required String noteTitle,
+      required String noteBody}) async {
+    return notesRepository.createNote(
+      userId: userId,
+      noteTitle: noteTitle,
+      noteBody: noteBody,
+    );
+  }
 }
 
 final noteServiceProvider = Provider((ref) =>

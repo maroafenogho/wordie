@@ -37,6 +37,16 @@ extension IntDate on String {
   }
 }
 
+extension Title on String {
+  String get extractTitle {
+    if (length >= 10) {
+      return substring(0, 10);
+    } else {
+      return this;
+    }
+  }
+}
+
 extension MyList on List<Note> {
   List<Note> get orderedByDate {
     sort(((a, b) => b.created.epochDateFromString

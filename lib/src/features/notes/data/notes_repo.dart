@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordie/src/extensions/extensions.dart';
 
 import '../domain/user_note.dart';
 
@@ -14,22 +17,24 @@ class NotesRepository {
       {required String userId,
       String? category,
       required String noteTitle,
-      required String noteId,
       required String noteBody}) async {
     bool success = false;
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
     final dbRef = _firebaseDbRef.ref(userNotesEntry(userId));
     try {
-      await dbRef.child(noteId).set({
-        'title': noteTitle,
+      await dbRef.child(id).set({
+        'title': noteTitle.isEmpty ? noteBody.extractTitle : noteTitle,
         'body': noteBody,
         'is_favorite': false,
         'created': DateTime.now().toString(),
-        'note_id': noteId,
+        'note_id': id,
         'updated': DateTime.now().toString()
       });
       success = true;
     } catch (e) {
       success = false;
+      log(e.toString());
+      throw Exception(e.toString());
     }
     return success;
   }
@@ -83,8 +88,9 @@ class NotesRepository {
         'updated': DateTime.now().toString()
       });
       success = true;
-    } catch (error) {
-      // print(error);
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
     }
     return success;
   }
@@ -96,11 +102,11 @@ class NotesRepository {
     bool success = false;
     final dbRef = _firebaseDbRef.ref('${userNotesEntry(userId)}/$noteId');
     try {
-      await dbRef
-          .update({'is_favorite': isFav, 'updated': DateTime.now().toString()});
+      await dbRef.update({'is_favorite': isFav});
       success = true;
-    } catch (error) {
-      // print(error);
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
     }
     return success;
   }
@@ -112,8 +118,9 @@ class NotesRepository {
     try {
       await dbRef.remove();
       success = true;
-    } catch (error) {
-      // print(error);
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
     }
     return success;
   }

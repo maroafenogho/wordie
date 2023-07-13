@@ -13,7 +13,7 @@ import 'package:wordie/src/features/auth/presentation/controllers/login_controll
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
-import 'package:wordie/src/features/home/presentation/screens/home.dart';
+import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -108,7 +108,7 @@ class LoginScreen extends ConsumerWidget {
                     if (user.emailVerified) {
                       showSnackbar('Login successful', context);
 
-                      context.go(HomeScreen.routeName);
+                      context.go(AppRoute.notes.name);
                     } else {}
                   }
                 } else {

@@ -8,7 +8,6 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
-import 'package:wordie/src/features/home/presentation/controllers/update_fav_note.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
 import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
@@ -76,22 +75,22 @@ class NotesGridView extends StatelessWidget {
                 right: 5,
                 child: InkWell(
                   onTap: () async {
-                    bool success = await ref
-                        .read(asyncUpdateFavProvider.notifier)
-                        .updateFavNote(
-                            noteId: notesList[index].noteId,
-                            isFav: !notesList[index].isFavorite);
-                    if (success) {
-                      showSnackbar(
-                          notesList[index].isFavorite
-                              ? 'Removed to fovourites'
-                              : 'Added to fovourites',
-                          context);
-                    } else {
-                      showSnackbar(
-                          ref.watch(asyncUpdateFavProvider).error.toString(),
-                          context);
-                    }
+                    // bool success = await ref
+                    //     .read(asyncUpdateFavProvider.notifier)
+                    //     .updateFavNote(
+                    //         noteId: notesList[index].noteId,
+                    //         isFav: !notesList[index].isFavorite);
+                    // if (success) {
+                    //   showSnackbar(
+                    //       notesList[index].isFavorite
+                    //           ? 'Removed to fovourites'
+                    //           : 'Added to fovourites',
+                    //       context);
+                    // } else {
+                    //   // showSnackbar(
+                    //   //     ref.watch(asyncUpdateFavProvider).error.toString(),
+                    //   //     context);
+                    // }
                   },
                   child: Container(
                     padding: const EdgeInsets.all(2),

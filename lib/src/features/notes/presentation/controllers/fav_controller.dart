@@ -4,7 +4,7 @@ import 'package:wordie/src/features/auth/presentation/controllers/current_user.d
 import '../../application/notes_service.dart';
 import '../../domain/user_note.dart';
 
-class AsyncFavNotesNotifier extends StreamNotifier<List<Note>> {
+class AsyncFavNotesNotifier extends AutoDisposeStreamNotifier<List<Note>> {
   @override
   Stream<List<Note>> build() {
     return getFavNotesStream();
@@ -16,12 +16,12 @@ class AsyncFavNotesNotifier extends StreamNotifier<List<Note>> {
     if (user == null) {
       throw AssertionError('User cannot be null');
     }
-    
+
     return ref.watch(noteServiceProvider).favNotesList(user.userId);
   }
 }
 
 final asyncFavNotesStream =
-    StreamNotifierProvider<AsyncFavNotesNotifier, List<Note>>(
+    AutoDisposeStreamNotifierProvider<AsyncFavNotesNotifier, List<Note>>(
   () => AsyncFavNotesNotifier(),
 );

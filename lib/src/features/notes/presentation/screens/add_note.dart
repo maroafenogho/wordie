@@ -6,8 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
-import 'package:wordie/src/features/home/presentation/controllers/create_note.dart';
+import 'package:wordie/src/features/notes/presentation/controllers/add_note_controller.dart';
 
 class AddNewNote extends StatefulWidget {
   const AddNewNote({super.key});
@@ -30,14 +29,18 @@ class _AddNewNoteState extends State<AddNewNote> {
           appBar: AppBar(
             backgroundColor: WordieConstants.backgroundColor,
             leading: InkWell(
-              onTap: () {
-                context.pop();
-                if (titleController.text.isNotEmpty &&
-                    bodyController.text.isNotEmpty) {
-                  ref.read(asyncAddNoteProvider.notifier).createNote(
-                      userId: ref.watch(currentUserProvider).value!.userId,
-                      noteTitle: titleController.text.trim(),
-                      noteBody: bodyController.text.trim());
+              onTap: () async {
+                if (bodyController.text.isNotEmpty) {
+                  final success = await ref
+                      .watch(asyncAddNoteProvider.notifier)
+                      .createNote(
+                          noteTitle: titleController.text.trim(),
+                          noteBody: bodyController.text.trim());
+                  if (success) {
+                    context.pop();
+                  }
+                } else {
+                  context.pop();
                 }
               },
               child: const Icon(Icons.arrow_back_ios_new),
@@ -47,7 +50,18 @@ class _AddNewNoteState extends State<AddNewNote> {
                 visible: showSaveButton,
                 child: IconButton(
                   icon: const Icon(Icons.check),
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (bodyController.text.isNotEmpty) {
+                      final success = await ref
+                          .watch(asyncAddNoteProvider.notifier)
+                          .createNote(
+                              noteTitle: titleController.text.trim(),
+                              noteBody: bodyController.text.trim());
+                      if (success) {
+                        context.pop();
+                      }
+                    }
+                  },
                 ),
               ),
               InkWell(
@@ -65,19 +79,22 @@ class _AddNewNoteState extends State<AddNewNote> {
           ),
           body: BackButtonListener(
             onBackButtonPressed: () async {
-              context.pop();
-              if (titleController.text.isNotEmpty &&
-                  bodyController.text.isNotEmpty) {
-                ref.read(asyncAddNoteProvider.notifier).createNote(
-                    userId: ref.watch(currentUserProvider).value!.userId,
-                    noteTitle: titleController.text.trim(),
-                    noteBody: bodyController.text.trim());
+              if (bodyController.text.isNotEmpty) {
+                final success = await ref
+                    .watch(asyncAddNoteProvider.notifier)
+                    .createNote(
+                        noteTitle: titleController.text.trim(),
+                        noteBody: bodyController.text.trim());
+                if (success) {
+                  context.pop();
+                }
+              } else {
+                context.pop();
               }
               return Future.delayed(const Duration(seconds: 0));
             },
             child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
                   30.0.vSpace,
@@ -87,7 +104,8 @@ class _AddNewNoteState extends State<AddNewNote> {
                       controller: titleController,
                       style: WordieTypography.h1,
                       onChanged: (value) {
-                        if (value.isNotEmpty || bodyController.text.isNotEmpty) {
+                        if (value.isNotEmpty ||
+                            bodyController.text.isNotEmpty) {
                           if (!showSaveButton) {
                             setState(() {
                               showSaveButton = true;
@@ -114,7 +132,8 @@ class _AddNewNoteState extends State<AddNewNote> {
                       keyboardType: TextInputType.multiline,
                       minLines: null,
                       onChanged: (value) {
-                        if (value.isNotEmpty || titleController.text.isNotEmpty) {
+                        if (value.isNotEmpty ||
+                            titleController.text.isNotEmpty) {
                           if (!showSaveButton) {
                             setState(() {
                               showSaveButton = true;

@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/home/presentation/screens/widgets/delete_widget.dart';
-
 import '../../domain/user_note.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
@@ -63,15 +61,15 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
           ),
           InkWell(
             onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => DeleteBottomSheet(
-                  size: size,
-                  onNoTap: () => context.pop(),
-                  onYesTap: () async {},
-                  isLoading: false,
-                ),
-              );
+              // showModalBottomSheet(
+              //   context: context,
+              //   builder: (context) => DeleteBottomSheet(
+              //     size: size,
+              //     onNoTap: () => context.pop(),
+              //     onYesTap: () async {},
+              //     isLoading: false,
+              //   ),
+              // );
             },
             child: const Icon(Icons.delete),
           ),

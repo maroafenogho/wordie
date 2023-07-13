@@ -7,11 +7,7 @@ import 'package:wordie/src/features/auth/presentation/controllers/current_user.d
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
-import 'package:wordie/src/features/auth/presentation/screens/wrapper.dart';
 import 'package:wordie/src/features/notes/presentation/screens/account.dart';
-import 'package:wordie/src/features/home/presentation/screens/add_note.dart';
-import 'package:wordie/src/features/home/presentation/screens/edit_note.dart';
-import 'package:wordie/src/features/home/presentation/screens/home.dart';
 import 'package:wordie/src/features/notes/presentation/screens/fav.dart';
 import 'package:wordie/src/features/notes/presentation/screens/notes_dash.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
@@ -89,28 +85,29 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             },
             routes: [
               GoRoute(
-                  path: '/notes',
-                  name: AppRoute.notes.name,
-                  pageBuilder: (context, state) => MaterialPage(
-                        key: state.pageKey,
-                        child: const NotesHome(),
-                      ),
-                  routes: [
-                    GoRoute(
-                      path: 'addnote',
-                      name: AppRoute.addNote.name,
-                      builder: (context, state) => const AddNewNote(),
-                    ),
-                    GoRoute(
-                        path: ':noteId',
-                        name: AppRoute.noteDetails.name,
-                        builder: (context, state) {
-                          final note = state.extra as Note;
-                          return NoteDetailsScreen(
-                            note: note,
-                          );
-                        })
-                  ]),
+                path: '/notes',
+                name: AppRoute.notes.name,
+                pageBuilder: (context, state) => MaterialPage(
+                  key: state.pageKey,
+                  child: const NotesHome(),
+                ),
+                routes: [
+                  GoRoute(
+                    path: 'addnote',
+                    name: AppRoute.addNote.name,
+                    builder: (context, state) => const AddNewNote(),
+                  ),
+                  GoRoute(
+                      path: ':noteId',
+                      name: AppRoute.noteDetails.name,
+                      builder: (context, state) {
+                        final note = state.extra as Note;
+                        return NoteDetailsScreen(
+                          note: note,
+                        );
+                      })
+                ],
+              ),
               GoRoute(
                 path: '/favorites',
                 name: AppRoute.favNotes.name,
@@ -128,26 +125,5 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 ),
               ),
             ]),
-        GoRoute(
-            name: HomeScreen.routeName,
-            path: HomeScreen.routeName,
-            builder: (context, state) => const HomeScreen(),
-            routes: [
-              GoRoute(
-                path: AddNoteScreen.routeName,
-                name: AddNoteScreen.routeName,
-                builder: (context, state) => AddNoteScreen(),
-              ),
-              GoRoute(
-                path: EditNoteScreen.routeName,
-                name: EditNoteScreen.routeName,
-                builder: (context, state) => EditNoteScreen(),
-              ),
-            ]),
-        GoRoute(
-          name: Wrapper.routeName,
-          path: Wrapper.routeName,
-          builder: (context, state) => const Wrapper(),
-        ),
-      ]);
+         ]);
 });

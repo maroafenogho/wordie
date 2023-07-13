@@ -6,7 +6,7 @@ import 'package:wordie/src/features/auth/presentation/controllers/current_user.d
 import '../../application/notes_service.dart';
 import '../../domain/user_note.dart';
 
-class AsyncNotesNotifier extends StreamNotifier<List<Note>> {
+class AsyncNotesNotifier extends AutoDisposeStreamNotifier<List<Note>> {
   @override
   Stream<List<Note>> build() {
     return getNotesStream();
@@ -24,6 +24,7 @@ class AsyncNotesNotifier extends StreamNotifier<List<Note>> {
   }
 }
 
-final asyncNotesStream = StreamNotifierProvider<AsyncNotesNotifier, List<Note>>(
+final asyncNotesStream =
+    AutoDisposeStreamNotifierProvider<AsyncNotesNotifier, List<Note>>(
   () => AsyncNotesNotifier(),
 );
