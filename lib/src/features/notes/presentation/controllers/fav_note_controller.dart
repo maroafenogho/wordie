@@ -5,28 +5,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/notes/application/notes_service.dart';
 
-final asyncAddNoteProvider =
-    AutoDisposeAsyncNotifierProvider<AsyncCreateNoteNotifier, bool>(
-  () => AsyncCreateNoteNotifier(),
+final asyncUpdateFavNoteProvider =
+    AutoDisposeAsyncNotifierProvider<AsyncUpdateFavNoteNotifier, bool>(
+  () => AsyncUpdateFavNoteNotifier(),
 );
 
-class AsyncCreateNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
+class AsyncUpdateFavNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
     return false;
   }
 
-  Future<bool> createNote(
-      {required String noteTitle, required String noteBody}) async {
+  Future<bool> updateFavNote(
+      {required bool isFav, required String noteId}) async {
     final user = ref.watch(currentUserProvider).value;
     if (user == null) {
       throw AssertionError('User cannot be null');
     }
     bool success = false;
-    state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      success = await ref.watch(noteServiceProvider).createNote(
-          userId: user.userId, noteTitle: noteTitle, noteBody: noteBody);
+      success = await ref
+          .watch(noteServiceProvider)
+          .updateFavNote(userId: user.userId, noteId: noteId, isFav: isFav);
       return success;
     });
     if (state.hasError) {

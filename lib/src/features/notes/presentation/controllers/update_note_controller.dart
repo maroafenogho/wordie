@@ -5,19 +5,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/notes/application/notes_service.dart';
 
-final asyncAddNoteProvider =
-    AutoDisposeAsyncNotifierProvider<AsyncCreateNoteNotifier, bool>(
-  () => AsyncCreateNoteNotifier(),
+final asyncUpdateNoteProvider =
+    AutoDisposeAsyncNotifierProvider<AsyncUpdateNoteNotifier, bool>(
+  () => AsyncUpdateNoteNotifier(),
 );
 
-class AsyncCreateNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
+class AsyncUpdateNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
     return false;
   }
 
-  Future<bool> createNote(
-      {required String noteTitle, required String noteBody}) async {
+  Future<bool> updateNote(
+      {required String newTitle,
+      required String newBody,
+      required String noteId}) async {
     final user = ref.watch(currentUserProvider).value;
     if (user == null) {
       throw AssertionError('User cannot be null');
@@ -25,8 +27,11 @@ class AsyncCreateNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
     bool success = false;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      success = await ref.watch(noteServiceProvider).createNote(
-          userId: user.userId, noteTitle: noteTitle, noteBody: noteBody);
+      success = await ref.watch(noteServiceProvider).updateNote(
+          userId: user.userId,
+          newTitle: newTitle,
+          newBody: newBody,
+          noteId: noteId);
       return success;
     });
     if (state.hasError) {

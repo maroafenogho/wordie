@@ -10,6 +10,7 @@ import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
 // import 'package:wordie/src/features/home/domain/note.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
+import 'package:wordie/src/features/notes/presentation/controllers/fav_note_controller.dart';
 import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
 
@@ -92,25 +93,25 @@ class NotesListView extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () async {
-                        // bool success = await ref
-                        //     .read(asyncUpdateFavProvider.notifier)
-                        //     .updateFavNote(
-                        //         noteId: notesList[index].noteId,
-                        //         isFav: !notesList[index].isFavorite);
-                        // if (success) {
-                        //   showSnackbar(
-                        //       notesList[index].isFavorite
-                        //           ? 'Removed to fovourites'
-                        //           : 'Added to fovourites',
-                        //       context);
-                        // } else {
-                        //   showSnackbar(
-                        //       ref
-                        //           .watch(asyncUpdateFavProvider)
-                        //           .error
-                        //           .toString(),
-                        //       context);
-                        // }
+                        bool success = await ref
+                            .watch(asyncUpdateFavNoteProvider.notifier)
+                            .updateFavNote(
+                                noteId: notesList[index].noteId,
+                                isFav: !notesList[index].isFavorite);
+                        if (success) {
+                          showSnackbar(
+                              notesList[index].isFavorite
+                                  ? 'Removed to fovourites'
+                                  : 'Added to fovourites',
+                              context);
+                        } else {
+                          showSnackbar(
+                              ref
+                                  .watch(asyncUpdateFavNoteProvider)
+                                  .error
+                                  .toString(),
+                              context);
+                        }
                       },
                       child: Icon(notesList[index].isFavorite
                           ? Icons.favorite

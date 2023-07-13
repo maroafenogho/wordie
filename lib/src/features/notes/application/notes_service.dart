@@ -27,6 +27,30 @@ class UserNotesService {
       noteBody: noteBody,
     );
   }
+
+  Future<bool> updateNote(
+      {required String userId,
+      required String noteId,
+      required String newTitle,
+      required String newBody}) async {
+    return notesRepository.updateNote(
+      userId: userId,
+      newTitle: newTitle,
+      newBody: newBody,
+      noteId: noteId,
+    );
+  }
+
+  Future<bool> updateFavNote(
+      {required String userId,
+      required String noteId,
+      required bool isFav}) async {
+    return notesRepository.updateFavNote(
+      userId: userId,
+      noteId: noteId,
+      isFav: isFav,
+    );
+  }
 }
 
 final noteServiceProvider = Provider((ref) =>
