@@ -151,7 +151,7 @@ class NotesHome extends StatelessWidget {
                                   onPressed: () => ref
                                       .watch(asyncNotesStream.notifier)
                                       .getNotesStream(),
-                                  child: Text('Reload'))
+                                  child: const Text('Reload'))
                             ],
                           ),
                         ),
