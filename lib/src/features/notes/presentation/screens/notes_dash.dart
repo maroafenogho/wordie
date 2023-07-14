@@ -168,9 +168,9 @@ class NotesHome extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         isExtended: true,
         tooltip: 'Add Note',
-        backgroundColor: WordieConstants.containerColor,
-        foregroundColor: WordieConstants.mainColor,
-        splashColor: WordieConstants.backgroundColor,
+        backgroundColor: WordieConstants.mainColor,
+        foregroundColor: WordieConstants.backgroundColor,
+        splashColor: WordieConstants.containerColor,
         onPressed: () {
           context.goNamed(AppRoute.addNote.name);
         },

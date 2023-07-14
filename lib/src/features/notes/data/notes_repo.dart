@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/extensions/extensions.dart';
 
 import '../domain/user_note.dart';
 
@@ -20,16 +19,16 @@ class NotesRepository {
       required String noteBody}) async {
     bool success = false;
     String id = DateTime.now().millisecondsSinceEpoch.toString();
+    final note = Note(
+        title: noteTitle,
+        body: noteBody,
+        created: DateTime.now().toString(),
+        noteId: id,
+        updated: DateTime.now().toString(),
+        isFavorite: false);
     final dbRef = _firebaseDbRef.ref(userNotesEntry(userId));
     try {
-      await dbRef.child(id).set({
-        'title': noteTitle.isEmpty ? noteBody.extractTitle : noteTitle,
-        'body': noteBody,
-        'is_favorite': false,
-        'created': DateTime.now().toString(),
-        'note_id': id,
-        'updated': DateTime.now().toString()
-      });
+      await dbRef.child(id).set(note.toMap());
       success = true;
     } catch (e) {
       success = false;

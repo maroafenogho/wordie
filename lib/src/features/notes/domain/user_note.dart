@@ -1,3 +1,5 @@
+import 'package:wordie/src/extensions/extensions.dart';
+
 class Note {
   String title;
   String body;
@@ -23,4 +25,12 @@ class Note {
         isFavorite: map['is_favorite'] ?? false,
         updated: map['updated']);
   }
+  Map<String, dynamic> toMap() => {
+        'title': title.isEmpty ? body.extractTitle : title,
+        'body': body,
+        'created': created,
+        'updated': updated,
+        'noteId': noteId,
+        'isFavorite': isFavorite,
+      };
 }
