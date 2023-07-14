@@ -8,7 +8,7 @@ final sharedPreferencesProvider =
     Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
 final displayTypeProvider = StateProvider(
-  (ref) => ref.read(settingsRepoProvider).getDisplayType() ?? 'list',
+  (ref) => ref.watch(settingsRepoProvider).getDisplayType() ?? 'list',
 );
 final settingsRepoProvider = Provider(
   (ref) => SettingsRepo(ref: ref),
@@ -21,14 +21,14 @@ final updateDisplayTypeProvider =
 class AsyncDisplayTypeNotifier extends AsyncNotifier<bool> {
   @override
   FutureOr<bool> build() {
-    throw UnimplementedError();
+    return false;
   }
 
   Future<bool> setDisplayType(String displayType) async {
     bool success = false;
     state = await AsyncValue.guard(() async {
       success =
-          await ref.read(settingsRepoProvider).setDisplayType(displayType);
+          await ref.watch(settingsRepoProvider).setDisplayType(displayType);
       return success;
     });
     return success;

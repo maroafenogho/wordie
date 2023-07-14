@@ -1,12 +1,15 @@
-class Note {
-  String title;
-  String body;
-  String created;
-  String updated;
-  String noteId;
-  bool isFavorite;
+import 'package:equatable/equatable.dart';
+import 'package:wordie/src/extensions/extensions.dart';
 
-  Note(
+class Note extends Equatable {
+  final String title;
+  final String body;
+  final String created;
+  final String updated;
+  final String noteId;
+  final bool isFavorite;
+
+  const Note(
       {required this.title,
       required this.body,
       required this.created,
@@ -23,4 +26,16 @@ class Note {
         isFavorite: map['is_favorite'] ?? false,
         updated: map['updated']);
   }
+  Map<String, dynamic> toMap() => {
+        'title': title.isEmpty ? body.extractTitle : title,
+        'body': body,
+        'created': created,
+        'updated': updated,
+        'note_id': noteId,
+        'is_favorite': isFavorite,
+      };
+
+  @override
+  List<Object?> get props =>
+      [title, body, created, noteId, updated, isFavorite];
 }
