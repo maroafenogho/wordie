@@ -40,7 +40,7 @@ extension IntDate on String {
 extension Title on String {
   String get extractTitle {
     if (length >= 11) {
-      return '${substring(0, 10)}...';
+      return '${substring(0, 10).trim()}...';
     } else {
       return this;
     }

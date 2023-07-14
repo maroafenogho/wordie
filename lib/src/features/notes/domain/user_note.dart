@@ -1,14 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 
-class Note {
-  String title;
-  String body;
-  String created;
-  String updated;
-  String noteId;
-  bool isFavorite;
+class Note extends Equatable {
+  final String title;
+  final String body;
+  final String created;
+  final String updated;
+  final String noteId;
+  final bool isFavorite;
 
-  Note(
+  const Note(
       {required this.title,
       required this.body,
       required this.created,
@@ -30,7 +31,11 @@ class Note {
         'body': body,
         'created': created,
         'updated': updated,
-        'noteId': noteId,
-        'isFavorite': isFavorite,
+        'note_id': noteId,
+        'is_favorite': isFavorite,
       };
+
+  @override
+  List<Object?> get props =>
+      [title, body, created, noteId, updated, isFavorite];
 }
