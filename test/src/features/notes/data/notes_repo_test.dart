@@ -22,12 +22,14 @@ void main() {
           userId: testUser.userId,
           noteTitle: 'noteTitle',
           noteBody: 'Body')).thenAnswer((_) => Future.value(true));
-      await notesRepository.createNote(
+      final success = await notesRepository.createNote(
           userId: testUser.userId, noteTitle: 'noteTitle', noteBody: 'Body');
       verify(
         () => notesRepository.createNote(
             userId: testUser.userId, noteTitle: 'noteTitle', noteBody: 'Body'),
       ).called(1);
+
+      expect(true, success);
     });
 
     test('get notes', () {
