@@ -15,6 +15,7 @@ class AsyncLoginNotifier extends AsyncNotifier<User?> {
   }
 
   Future<User?> login(String email, String password) async {
+    
     User? user;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
