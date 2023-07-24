@@ -29,6 +29,25 @@ extension Date on String {
     return '${date.hour.remainder(24).padLeft}:${date.minute.remainder(60).padLeft} ${date.day.remainder(31).padLeft}-${date.month.remainder(12).padLeft}-${date.year}';
   }
 }
+extension Validator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
+  }
+
+  bool has8OrMoreCharacters() {
+    return RegExp(r'.{8,}').hasMatch(this);
+  }
+
+  bool containsNumber() {
+    return RegExp(r'.*\d+.*').hasMatch(this);
+  }
+
+  bool containsUppercase() {
+    return RegExp(r'.*[A-Z]+.*').hasMatch(this);
+  }
+}
 
 extension IntDate on String {
   int get epochDateFromString {
