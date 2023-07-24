@@ -1,43 +1,72 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wordie/src/features/auth/data/repo/validation_repo.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../../mocks.dart';
 
 void main() {
-  final repo = ValidationRepo();
+  final mockValidationRepo = MockValidationRepo();
 
   group('Email validation tests:', () {
     test('email validation for empty email', () {
-      final emailVal = repo.validateEmail('');
-      expect(emailVal, 'Email cannot be empty');
+      when(() => mockValidationRepo.validateEmail(''))
+          .thenReturn('Email cannot be empty');
+
+      final response = mockValidationRepo.validateEmail('');
+      expect(response, 'Email cannot be empty');
     });
     test('email validation for malformed email', () {
-      final emailVal = repo.validateEmail('maro');
-      expect(emailVal, 'Please enter a valid email address');
+      when(() => mockValidationRepo.validateEmail('maro'))
+          .thenReturn('Please enter a valid email address');
+
+      final response = mockValidationRepo.validateEmail('maro');
+      expect(response, 'Please enter a valid email address');
     });
     test('email validation for good email', () {
-      final emailVal = repo.validateEmail('maro@gmail.com');
-      expect(emailVal, null);
+      when(() => mockValidationRepo.validateEmail('maro@gmail.com'))
+          .thenReturn(null);
+      final response = mockValidationRepo.validateEmail('maro@gmail.com');
+      expect(response, null);
     });
   });
   group('Password validation tests:', () {
     test('empty password', () {
-      final passwordVal = repo.validatePassword('');
-      expect(passwordVal, 'Password cannot be empty');
+      when(
+        () => mockValidationRepo.validatePassword(''),
+      ).thenReturn('Password cannot be empty');
+
+      final response = mockValidationRepo.validatePassword('');
+      expect(response, 'Password cannot be empty');
     });
     test('password without uppercase', () {
-      final passwordVal = repo.validatePassword('qwertty2232');
-      expect(passwordVal, 'Your password must contain an uppercase character');
+      when(
+        () => mockValidationRepo.validatePassword('rtwt435653'),
+      ).thenReturn('Your password must contain an uppercase character');
+
+      final response = mockValidationRepo.validatePassword('rtwt435653');
+      expect(response, 'Your password must contain an uppercase character');
     });
     test('password without number', () {
-      final passwordVal = repo.validatePassword('qwertyQ');
-      expect(passwordVal, 'Your password must contain a number');
+      when(
+        () => mockValidationRepo.validatePassword('qwertyQhhhj'),
+      ).thenReturn('Your password must contain a number');
+
+      final response = mockValidationRepo.validatePassword('qwertyQhhhj');
+      expect(response, 'Your password must contain a number');
     });
     test('password with less than 8 characters', () {
-      final passwordVal = repo.validatePassword('Qwt5j');
-      expect(passwordVal, 'Your password must be at least 8 characters long');
+      when(
+        () => mockValidationRepo.validatePassword('Qw35Ty'),
+      ).thenReturn('Your password must be at least 8 characters long');
+
+      final response = mockValidationRepo.validatePassword('Qw35Ty');
+      expect(response, 'Your password must be at least 8 characters long');
     });
     test('password following correct format', () {
-      final passwordVal = repo.validatePassword('Qwt5j');
-      expect(passwordVal, 'Your password must be at least 8 characters long');
+      when(
+        () => mockValidationRepo.validatePassword('QWErTy34'),
+      ).thenReturn(null);
+      final response = mockValidationRepo.validatePassword('QWErTy34');
+      expect(response, null);
     });
   });
 }
