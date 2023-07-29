@@ -8,11 +8,11 @@ import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/validation_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
-import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
+import 'package:wordie/src/features/auth/presentation/screens/widgets/formfields.dart';
 import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
 
@@ -27,126 +27,120 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _formKey = GlobalKey<FormState>();
+    // ref.listen(asyncLoginProvider.notifier.select((value) => value),
+    //     (previous, next) {
+    //   if (next != null) {}
+    // });
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            50.0.vSpace,
-            const Text.rich(TextSpan(
-                text: 'Welcome to ',
-                style: WordieTypography.bodyText14,
-                children: [
-                  TextSpan(text: 'WORDIE', style: WordieTypography.h1)
-                ])),
-            10.0.vSpace,
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Login',
-                textAlign: TextAlign.start,
-                style: WordieTypography.h4,
+        child: Form(
+          key: _formKey,
+          // autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              50.0.vSpace,
+              const Text.rich(TextSpan(
+                  text: 'Welcome to ',
+                  style: WordieTypography.bodyText14,
+                  children: [
+                    TextSpan(text: 'WORDIE', style: WordieTypography.h1)
+                  ])),
+              10.0.vSpace,
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Login',
+                  textAlign: TextAlign.start,
+                  style: WordieTypography.h4,
+                ),
               ),
-            ),
-            10.0.vSpace,
-            WordieFormInput(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              hintText: 'Email',
-              prefixIcon: const Icon(
-                Icons.email_outlined,
-                color: WordieConstants.mainColor,
+              10.0.vSpace,
+              EmailFormField(
+                autoValidateMode: AutovalidateMode.onUserInteraction,
+                controller: emailController,
+                validator: ref.watch(validationNotifierProvider.notifier
+                    .select((value) => value.validateEmail)),
               ),
-            ),
-            10.0.vSpace,
-            WordieFormInput(
-              controller: passwordController,
-              obscureText: !ref.watch(showPasswordProvider),
-              hintText: 'Password',
-              suffixIcon: InkWell(
-                onTap: () {
-                  ref.read(showPasswordProvider.notifier).state =
-                      !ref.watch(showPasswordProvider);
-                },
-                child: Icon(
-                    ref.watch(showPasswordProvider)
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: WordieConstants.mainColor),
-              ),
-              prefixIcon: const Icon(
-                Icons.lock_outline,
-                color: WordieConstants.mainColor,
-              ),
-            ),
-            30.0.vSpace,
-            WordieButton(
-              text: 'LOGIN',
-              isLoading: ref.watch(asyncLoginProvider).isLoading,
-              onPressed: () async {
-                if (emailController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  final user =
-                      await ref.watch(asyncLoginProvider.notifier).login(
-                            emailController.text.trim(),
-                            passwordController.text.trim(),
-                          );
+              10.0.vSpace,
+              PasswordFormField(
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
+                  controller: passwordController,
+                  validator: ref.watch(validationNotifierProvider.notifier
+                      .select((value) => value.validatePassword))),
+              30.0.vSpace,
+              WordieButton(
+                text: 'LOGIN',
+                isLoading: ref.watch(asyncLoginProvider).isLoading,
+                onPressed: () async {
+                  bool validated = _formKey.currentState!.validate();
+                  if (validated) {
+                    if ((emailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty)) {
+                      final user =
+                          await ref.watch(asyncLoginProvider.notifier).login(
+                                emailController.text.trim(),
+                                passwordController.text.trim(),
+                              );
 
-                  if (user == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        ref.watch(asyncLoginProvider).error.toString(),
-                        style: WordieTypography.bodyText14,
-                      ),
-                      dismissDirection: DismissDirection.up,
-                      backgroundColor: WordieConstants.containerColor,
-                    ));
-                  } else {
-                    if (user.emailVerified) {
-                      showSnackbar('Login successful', context);
+                      if (user == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            ref.watch(asyncLoginProvider).error.toString(),
+                            style: WordieTypography.bodyText14,
+                          ),
+                          dismissDirection: DismissDirection.up,
+                          backgroundColor: WordieConstants.containerColor,
+                        ));
+                      } else {
+                        if (user.emailVerified) {
+                          showSnackbar('Login successful', context);
 
-                      context.go(AppRoute.notes.name);
-                    } else {}
+                          context.go(AppRoute.notes.name);
+                        } else {}
+                      }
+                    } else {
+                      // showSnackbar('Please fill all text fields', context);
+                    }
                   }
-                } else {
-                  showSnackbar('Please fill all text fields', context);
-                }
-              },
-            ),
-            30.0.vSpace,
-            Text.rich(
-              TextSpan(
-                  text: 'Forgot Password? ',
-                  style: WordieTypography.bodyText12,
-                  children: [
-                    TextSpan(
-                        text: 'Reset',
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () =>
-                              context.goNamed(ResetPasswordScreen.routeName),
-                        style: WordieTypography.h6.copyWith(
-                            color: const Color.fromARGB(255, 48, 167, 251)))
-                  ]),
-            ),
-            10.0.vSpace,
-            Text.rich(
-              TextSpan(
-                  text: 'Don\'t have an account? ',
-                  style: WordieTypography.bodyText12,
-                  children: [
-                    TextSpan(
-                        text: 'Sign up',
-                        recognizer: TapGestureRecognizer()
-                          ..onTap =
-                              () => context.goNamed(SignUpScreen.routeName),
-                        style: WordieTypography.h6.copyWith(
-                            color: const Color.fromARGB(255, 48, 167, 251)))
-                  ]),
-            ),
-          ],
+                },
+              ),
+              30.0.vSpace,
+              Text.rich(
+                TextSpan(
+                    text: 'Forgot Password? ',
+                    style: WordieTypography.bodyText12,
+                    children: [
+                      TextSpan(
+                          text: 'Reset',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () =>
+                                context.goNamed(ResetPasswordScreen.routeName),
+                          style: WordieTypography.h6.copyWith(
+                              color: const Color.fromARGB(255, 48, 167, 251)))
+                    ]),
+              ),
+              10.0.vSpace,
+              Text.rich(
+                TextSpan(
+                    text: 'Don\'t have an account? ',
+                    style: WordieTypography.bodyText12,
+                    children: [
+                      TextSpan(
+                          text: 'Sign up',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap =
+                                () => context.goNamed(SignUpScreen.routeName),
+                          style: WordieTypography.h6.copyWith(
+                              color: const Color.fromARGB(255, 48, 167, 251)))
+                    ]),
+              ),
+            ],
+          ),
         ),
       ),
     ).darkStatusBar();

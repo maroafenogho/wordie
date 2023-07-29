@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 
-import '../../application/notes_service.dart';
+import '../../data/repositories/notes_repository.dart';
 import '../../domain/user_note.dart';
 
 class AsyncNotesNotifier extends AutoDisposeStreamNotifier<List<Note>> {
@@ -20,7 +20,7 @@ class AsyncNotesNotifier extends AutoDisposeStreamNotifier<List<Note>> {
       throw AssertionError('User cannot be null');
     }
     log('Getting notes');
-    return ref.watch(noteServiceProvider).getNotesList(user.userId);
+    return ref.watch(notesrepositoryProvider).getNotesList(user.userId);
   }
 }
 

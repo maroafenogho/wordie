@@ -5,12 +5,12 @@ import 'package:wordie/src/features/notes/domain/user_note.dart';
 import '../mocks.dart';
 
 void main() {
-  late MockNotesRepository notesRepository;
+  late MockNotesService notesRepository;
   final mockDb = MockFirebaseDatabase();
   final mockUser = MockAppUser();
 
   setUp(() {
-    notesRepository = MockNotesRepository(mockDb);
+    notesRepository = MockNotesService(mockDb);
   });
   group('notes:', () {
     test('add new note', () async {

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
-import 'package:wordie/src/features/notes/application/notes_service.dart';
+import 'package:wordie/src/features/notes/data/repositories/notes_repository.dart';
 
 final asyncUpdateNoteProvider =
     AutoDisposeAsyncNotifierProvider<AsyncUpdateNoteNotifier, bool>(
@@ -27,7 +27,7 @@ class AsyncUpdateNoteNotifier extends AutoDisposeAsyncNotifier<bool> {
     bool success = false;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      success = await ref.watch(noteServiceProvider).updateNote(
+      success = await ref.watch(notesrepositoryProvider).updateNote(
           userId: user.userId,
           newTitle: newTitle,
           newBody: newBody,
