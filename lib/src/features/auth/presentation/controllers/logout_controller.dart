@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:wordie/src/features/auth/data/repo/auth_repo.dart';
 
 final asyncLogoutProvider = AsyncNotifierProvider<AsyncLogoutNotifier, bool>(
   () => AsyncLogoutNotifier(),

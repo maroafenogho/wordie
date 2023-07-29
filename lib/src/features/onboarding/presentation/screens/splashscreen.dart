@@ -32,23 +32,22 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
+    // final size = MediaQuery.of(context).size;
+    return const Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
-      body: Container(
-        height: size.height,
-        width: size.width,
-        alignment: Alignment.center,
-        child: const FittedBox(
-            child: Text(
-          'WORDIE',
-          style: TextStyle(
-              letterSpacing: 10.0,
-              color: Colors.black,
-              fontSize: 55,
-              // height: 1,
-              fontWeight: FontWeight.w900),
-        )),
+      body: Center(
+        child: Hero(
+          tag: 'wordie',
+          child: Text(
+            'WORDIE',
+            style: TextStyle(
+                letterSpacing: 10.0,
+                color: Colors.black,
+                fontSize: 55,
+                // height: 1,
+                fontWeight: FontWeight.w900),
+          ),
+        ),
       ),
     ).darkStatusBar();
   }

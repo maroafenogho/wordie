@@ -2,35 +2,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
 
-import '../mocks.dart';
+import '../../../mocks.dart';
 
 void main() {
-  late MockNotesService notesRepository;
+  late MockNotesService notesService;
   final mockDb = MockFirebaseDatabase();
   final mockUser = MockAppUser();
 
   setUp(() {
-    notesRepository = MockNotesService(mockDb);
+    notesService = MockNotesService(mockDb);
   });
   group('notes:', () {
     test('add new note', () async {
-      when(() => notesRepository.createNote(
+      when(() => notesService.createNote(
           userId: mockUser.userId,
           noteTitle: 'noteTitle',
           noteBody: 'Body')).thenAnswer((_) => Future.value(true));
 
-      final success = await notesRepository.createNote(
+      final success = await notesService.createNote(
           userId: mockUser.userId, noteTitle: 'noteTitle', noteBody: 'Body');
 
       verify(
-        () => notesRepository.createNote(
+        () => notesService.createNote(
             userId: mockUser.userId, noteTitle: 'noteTitle', noteBody: 'Body'),
       ).called(1);
 
       expect(true, success);
     });
     test('get notes', () {
-      when(() => notesRepository.getNotesStream(mockUser.userId))
+      when(() => notesService.getNotesStream(mockUser.userId))
           .thenAnswer((_) => Stream.value(<Note>[]));
     });
   });

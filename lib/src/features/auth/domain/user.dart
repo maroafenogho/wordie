@@ -1,10 +1,10 @@
-class User {
+class AppUser {
   String email;
   String userId;
   String? fullName;
   bool emailVerified;
 
-  User(
+  AppUser(
       {required this.email,
       required this.emailVerified,
       this.fullName,

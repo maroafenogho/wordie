@@ -1,22 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordie/src/features/auth/data/repo/auth_repo.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 
-final asyncLoginProvider = AsyncNotifierProvider<AsyncLoginNotifier, User?>(
+final asyncLoginProvider = AsyncNotifierProvider<AsyncLoginNotifier, AppUser?>(
   () => AsyncLoginNotifier(),
 );
 
-class AsyncLoginNotifier extends AsyncNotifier<User?> {
+class AsyncLoginNotifier extends AsyncNotifier<AppUser?> {
   @override
-  FutureOr<User?> build() {
+  FutureOr<AppUser?> build() {
     throw UnimplementedError();
   }
 
-  Future<User?> login(String email, String password) async {
-    
-    User? user;
+  Future<AppUser?> login(String email, String password) async {
+    AppUser? user;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       user = await ref.read(authRepoProvider).login(email, password);
