@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 
-class ValidationRepo {
+class ValidationService {
   String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
       return 'Email cannot be empty';
@@ -31,6 +31,6 @@ class ValidationRepo {
   }
 }
 
-final validationRepo = Provider.autoDispose(
-  (ref) => ValidationRepo(),
+final validationServiceProvider = Provider.autoDispose(
+  (ref) => ValidationService(),
 );

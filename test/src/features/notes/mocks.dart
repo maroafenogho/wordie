@@ -2,13 +2,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wordie/src/features/auth/data/repo/auth_repo.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
-import 'package:wordie/src/features/notes/data/notes_repo.dart';
+import 'package:wordie/src/features/notes/data/datasources/remote/notes_service.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
 
-class MockNotesRepository extends Mock implements NotesRepository {
+class MockNotesService extends Mock implements NotesService {
   final MockFirebaseDatabase mockFirebaseDatabase;
 
-  MockNotesRepository(this.mockFirebaseDatabase);
+  MockNotesService(this.mockFirebaseDatabase);
 }
 
 class MockFirebaseDatabase extends Mock implements FirebaseDatabase {}

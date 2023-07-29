@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/user_note.dart';
+import '../../../domain/user_note.dart';
 
-class NotesRepository {
-  NotesRepository(this._firebaseDbRef);
+class NotesService {
+  NotesService(this._firebaseDbRef);
 
   final FirebaseDatabase _firebaseDbRef;
 
@@ -127,5 +127,5 @@ class NotesRepository {
 
 final firebaseDbProvider = Provider((ref) => FirebaseDatabase.instance);
 
-final notesRepositoryProvider =
-    Provider((ref) => NotesRepository(ref.watch(firebaseDbProvider)));
+final notesServiceProvider =
+    Provider((ref) => NotesService(ref.watch(firebaseDbProvider)));

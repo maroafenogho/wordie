@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/notes/data/notes_repo.dart';
+import 'package:wordie/src/features/notes/data/datasources/remote/notes_service.dart';
 
-import '../domain/user_note.dart';
+import '../../domain/user_note.dart';
 
-class UserNotesService {
-  UserNotesService({required this.notesRepository});
+class NotesRepository {
+  NotesRepository({required this.notesService});
 
-  final NotesRepository notesRepository;
+  final NotesService notesService;
 
   Stream<List<Note>> getNotesList(String userId) {
-    return notesRepository.getNotesStream(userId);
+    return notesService.getNotesStream(userId);
   }
 
   Stream<List<Note>> favNotesList(String userId) {
@@ -21,7 +21,7 @@ class UserNotesService {
       {required String userId,
       required String noteTitle,
       required String noteBody}) async {
-    return notesRepository.createNote(
+    return notesService.createNote(
       userId: userId,
       noteTitle: noteTitle,
       noteBody: noteBody,
@@ -33,7 +33,7 @@ class UserNotesService {
       required String noteId,
       required String newTitle,
       required String newBody}) async {
-    return notesRepository.updateNote(
+    return notesService.updateNote(
       userId: userId,
       newTitle: newTitle,
       newBody: newBody,
@@ -45,7 +45,7 @@ class UserNotesService {
       {required String userId,
       required String noteId,
       required bool isFav}) async {
-    return notesRepository.updateFavNote(
+    return notesService.updateFavNote(
       userId: userId,
       noteId: noteId,
       isFav: isFav,
@@ -53,5 +53,5 @@ class UserNotesService {
   }
 }
 
-final noteServiceProvider = Provider((ref) =>
-    UserNotesService(notesRepository: ref.watch(notesRepositoryProvider)));
+final notesrepositoryProvider = Provider(
+    (ref) => NotesRepository(notesService: ref.watch(notesServiceProvider)));

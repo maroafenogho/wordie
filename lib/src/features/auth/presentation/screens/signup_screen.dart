@@ -8,10 +8,9 @@ import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/sign_up_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
-import 'package:wordie/src/features/auth/presentation/screens/widgets/formfield.dart';
+import 'package:wordie/src/features/auth/presentation/screens/widgets/formfields.dart';
 import 'package:wordie/src/utils/utils.dart';
 
 class SignUpScreen extends ConsumerWidget {
@@ -51,55 +50,23 @@ class SignUpScreen extends ConsumerWidget {
               ),
             ),
             10.0.vSpace,
-            WordieFormInput(
+            EmailFormField(
               controller: emailController,
-              hintText: 'Email',
-              keyboardType: TextInputType.emailAddress,
-              prefixIcon: const Icon(
-                Icons.email_outlined,
-                color: WordieConstants.mainColor,
-              ),
             ),
             10.0.vSpace,
-            WordieFormInput(
+            PasswordFormField(
               controller: passwordController,
               hintText: 'Password',
-              obscureText: !ref.watch(showPasswordProvider),
-              suffixIcon: InkWell(
-                onTap: () {
-                  ref.read(showPasswordProvider.notifier).state =
-                      !ref.watch(showPasswordProvider);
-                },
-                child: Icon(
-                    ref.watch(showPasswordProvider)
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: WordieConstants.mainColor),
-              ),
-              prefixIcon: const Icon(
-                Icons.lock_outline,
-                color: WordieConstants.mainColor,
-              ),
             ),
             10.0.vSpace,
             WordieFormInput(
               controller: firstnameController,
               hintText: 'First name',
-              keyboardType: TextInputType.name,
-              prefixIcon: const Icon(
-                Icons.account_circle_outlined,
-                color: WordieConstants.mainColor,
-              ),
             ),
             10.0.vSpace,
             WordieFormInput(
               controller: lastnameController,
               hintText: 'Last name',
-              keyboardType: TextInputType.name,
-              prefixIcon: const Icon(
-                Icons.account_circle_outlined,
-                color: WordieConstants.mainColor,
-              ),
             ),
             30.0.vSpace,
             WordieButton(
