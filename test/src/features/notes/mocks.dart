@@ -13,7 +13,7 @@ class MockNotesService extends Mock implements NotesService {
 
 class MockFirebaseDatabase extends Mock implements FirebaseDatabase {}
 
-class MockAppUser extends Mock implements User {
+class MockAppUser extends Mock implements AppUser {
   @override
   bool get emailVerified => true;
 

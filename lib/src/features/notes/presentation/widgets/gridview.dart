@@ -23,7 +23,7 @@ class NotesGridView extends StatelessWidget {
   });
 
   final WidgetRef ref;
-  final AsyncValue<User?> currentUser;
+  final AsyncValue<AppUser?> currentUser;
   final List<Note> notesList;
   final Size size;
 

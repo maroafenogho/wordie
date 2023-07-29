@@ -44,12 +44,12 @@ class LoginScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               50.0.vSpace,
-              const Text.rich(TextSpan(
-                  text: 'Welcome to ',
-                  style: WordieTypography.bodyText14,
-                  children: [
-                    TextSpan(text: 'WORDIE', style: WordieTypography.h1)
-                  ])),
+              const Hero(
+                  tag: 'wordie',
+                  child: Text(
+                    'WORDIE',
+                    style: WordieTypography.h1,
+                  )),
               10.0.vSpace,
               const Align(
                 alignment: Alignment.centerLeft,

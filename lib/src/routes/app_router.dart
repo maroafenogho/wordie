@@ -13,6 +13,7 @@ import 'package:wordie/src/features/notes/presentation/screens/notes_dash.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
 import 'package:wordie/src/routes/scaffold_with_nav_bar.dart';
 
+import '../features/auth/data/repo/auth_repo.dart';
 import '../features/auth/presentation/controllers/auth_controller.dart';
 import '../features/notes/domain/user_note.dart';
 import '../features/notes/presentation/screens/add_note.dart';
@@ -125,5 +126,5 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 ),
               ),
             ]),
-         ]);
+      ]);
 });

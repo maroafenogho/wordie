@@ -1,16 +1,18 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 
 class AuthService {
-  // final _firebaseAuth = auth.FirebaseAuth.instance;
+  final auth.FirebaseAuth _firebaseAuth;
 
-  User? _userFromFirebase(auth.User? user) {
+  AuthService(this._firebaseAuth);
+
+  AppUser? _userFromFirebase(auth.User? user) {
     if (user != null) {
-      return User(
+      return AppUser(
         email: user.email!,
         emailVerified: user.emailVerified,
         fullName: user.displayName,
@@ -21,17 +23,19 @@ class AuthService {
     }
   }
 
-  Stream<User?> currentUser(Ref ref) {
-    return ref.watch(fbAuthProvider).authStateChanges().map(_userFromFirebase);
+  Stream<AppUser?> currentUser() {
+    return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-  Future<User?> login(String email, String password, Ref ref) async {
+  Future<AppUser?> login(
+    String email,
+    String password,
+  ) async {
     try {
-      final credential = await ref
-          .watch(fbAuthProvider)
-          .signInWithEmailAndPassword(email: email, password: password);
+      final credential = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       if (!credential.user!.emailVerified) {
-        await logout(ref)
+        await logout()
             .then((value) => throw Exception('Unverified email address'));
       }
 
@@ -42,10 +46,10 @@ class AuthService {
     }
   }
 
-  Future<bool> logout(Ref ref) async {
+  Future<bool> logout() async {
     bool success = false;
     try {
-      await ref.watch(fbAuthProvider).signOut();
+      await _firebaseAuth.signOut();
 
       success = true;
     } catch (error) {
@@ -54,10 +58,10 @@ class AuthService {
     return success;
   }
 
-  Future<bool> resetPassword(Ref ref, String email) async {
+  Future<bool> resetPassword(String email) async {
     bool success = false;
     try {
-      await ref.watch(fbAuthProvider).sendPasswordResetEmail(email: email);
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
       success = true;
     } catch (error) {
       log(error.toString());
@@ -66,16 +70,15 @@ class AuthService {
     return success;
   }
 
-  Future<User?> createUser(
-      {required String email,
-      required String password,
-      required String firstName,
-      required String lastName,
-      required Ref ref}) async {
+  Future<AppUser?> createUser({
+    required String email,
+    required String password,
+    required String firstName,
+    required String lastName,
+  }) async {
     try {
-      final credential = await ref
-          .watch(fbAuthProvider)
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
 
       await credential.user!.updateDisplayName('$firstName $lastName');
 
@@ -87,3 +90,9 @@ class AuthService {
     }
   }
 }
+
+final authServiceProvider = Provider(
+  (ref) => AuthService(ref.watch(fbAuthProvider)),
+);
+
+final fbAuthProvider = Provider((ref) => auth.FirebaseAuth.instance);

@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordie/src/features/auth/data/repo/auth_repo.dart';
 import 'package:wordie/src/features/auth/domain/user.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/auth_controller.dart';
 
 final currentUserProvider =
-    StreamNotifierProvider<UserNotifier, User?>(() => UserNotifier());
+    StreamNotifierProvider<UserNotifier, AppUser?>(() => UserNotifier());
 
-class UserNotifier extends StreamNotifier<User?> {
+class UserNotifier extends StreamNotifier<AppUser?> {
   @override
-  Stream<User?> build() {
+  Stream<AppUser?> build() {
     return getCurrentUser();
   }
 
-  Stream<User?> getCurrentUser() {
+  Stream<AppUser?> getCurrentUser() {
     return ref.watch(authRepoProvider).currentUser;
   }
 }
