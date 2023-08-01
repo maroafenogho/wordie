@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wordie/src/features/auth/data/repo/auth_repo.dart';
-import 'package:wordie/src/features/auth/domain/user.dart';
+import 'package:wordie/src/features/auth/domain/entity/user.dart';
 import 'package:wordie/src/features/notes/data/datasources/remote/notes_service.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
 
@@ -13,7 +13,7 @@ class MockNotesService extends Mock implements NotesService {
 
 class MockFirebaseDatabase extends Mock implements FirebaseDatabase {}
 
-class MockAppUser extends Mock implements AppUser {
+class MockAppUser extends Mock implements WordieUser {
   @override
   bool get emailVerified => true;
 

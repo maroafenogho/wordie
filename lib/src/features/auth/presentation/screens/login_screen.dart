@@ -8,7 +8,7 @@ import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/login_cont.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/validation_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
@@ -28,10 +28,6 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
-    // ref.listen(asyncLoginProvider.notifier.select((value) => value),
-    //     (previous, next) {
-    //   if (next != null) {}
-    // });
     return Scaffold(
       backgroundColor: WordieConstants.backgroundColor,
       body: Container(
@@ -75,22 +71,23 @@ class LoginScreen extends ConsumerWidget {
               30.0.vSpace,
               WordieButton(
                 text: 'LOGIN',
-                isLoading: ref.watch(asyncLoginProvider).isLoading,
+                isLoading: ref.watch(loginContAsyncNotifier).isLoading,
                 onPressed: () async {
                   bool validated = _formKey.currentState!.validate();
                   if (validated) {
                     if ((emailController.text.isNotEmpty &&
                         passwordController.text.isNotEmpty)) {
-                      final user =
-                          await ref.watch(asyncLoginProvider.notifier).login(
-                                emailController.text.trim(),
-                                passwordController.text.trim(),
-                              );
+                      final user = await ref
+                          .watch(loginContAsyncNotifier.notifier)
+                          .login(
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                          );
 
                       if (user == null) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
-                            ref.watch(asyncLoginProvider).error.toString(),
+                            ref.watch(loginContAsyncNotifier).error!.toString(),
                             style: WordieTypography.bodyText14,
                           ),
                           dismissDirection: DismissDirection.up,

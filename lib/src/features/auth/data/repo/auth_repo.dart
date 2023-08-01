@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordie/src/features/auth/data/services/auth_service.dart';
-import 'package:wordie/src/features/auth/domain/user.dart';
+import 'package:wordie/src/features/auth/domain/entity/user.dart';
 
 class AuthRepo {
   AuthRepo(this._authService);
   final AuthService _authService;
 
-  Future<AppUser?> signUp(
+  Future<WordieUser?> signUp(
       {required String email,
       required String password,
       required String firstName,
@@ -19,7 +19,7 @@ class AuthRepo {
     );
   }
 
-  Future<AppUser?> login(String email, String password) async {
+  Future<WordieUser?> login(String email, String password) async {
     return await _authService.login(email, password);
   }
 
@@ -31,7 +31,7 @@ class AuthRepo {
     return _authService.resetPassword(email);
   }
 
-  Stream<AppUser?> get currentUser {
+  Stream<WordieUser?> get currentUser {
     return _authService.currentUser();
   }
 }

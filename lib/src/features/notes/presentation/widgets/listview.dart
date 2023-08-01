@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/domain/user.dart';
+import 'package:wordie/src/features/auth/domain/entity/user.dart';
 // import 'package:wordie/src/features/home/domain/note.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
 import 'package:wordie/src/features/notes/presentation/controllers/fav_note_controller.dart';
@@ -24,7 +24,7 @@ class NotesListView extends StatelessWidget {
   });
 
   final WidgetRef ref;
-  final AsyncValue<AppUser?> currentUser;
+  final AsyncValue<WordieUser?> currentUser;
   final List<Note> notesList;
   final Size size;
 

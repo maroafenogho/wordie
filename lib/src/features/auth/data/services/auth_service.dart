@@ -3,16 +3,16 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/features/auth/domain/user.dart';
+import 'package:wordie/src/features/auth/domain/entity/user.dart';
 
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth;
 
   AuthService(this._firebaseAuth);
 
-  AppUser? _userFromFirebase(auth.User? user) {
+  WordieUser? _userFromFirebase(auth.User? user) {
     if (user != null) {
-      return AppUser(
+      return WordieUser(
         email: user.email!,
         emailVerified: user.emailVerified,
         fullName: user.displayName,
@@ -23,11 +23,11 @@ class AuthService {
     }
   }
 
-  Stream<AppUser?> currentUser() {
+  Stream<WordieUser?> currentUser() {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-  Future<AppUser?> login(
+  Future<WordieUser?> login(
     String email,
     String password,
   ) async {
@@ -70,7 +70,7 @@ class AuthService {
     return success;
   }
 
-  Future<AppUser?> createUser({
+  Future<WordieUser?> createUser({
     required String email,
     required String password,
     required String firstName,
