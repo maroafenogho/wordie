@@ -5,10 +5,17 @@ class ValidationService {
   String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
       return 'Email cannot be empty';
-    } else {
-      if (!email.isValidEmail()) {
-        return 'Please enter a valid email address';
-      }
+    }
+    if (!email.isValidEmail()) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
+  }
+
+  String? validateLoginPassword(String? password) {
+    if (password == null || password.isEmpty) {
+      return 'Password cannot be empty';
     }
     return null;
   }
@@ -16,17 +23,17 @@ class ValidationService {
   String? validatePassword(String? password) {
     if (password == null || password.isEmpty) {
       return 'Password cannot be empty';
-    } else {
-      if (!password.containsNumber()) {
-        return 'Your password must contain a number';
-      }
-      if (!password.containsUppercase()) {
-        return 'Your password must contain an uppercase character';
-      }
-      if (!password.has8OrMoreCharacters()) {
-        return 'Your password must be at least 8 characters long';
-      }
     }
+    if (!password.containsNumber()) {
+      return 'Your password must contain a number';
+    }
+    if (!password.containsUppercase()) {
+      return 'Your password must contain an uppercase character';
+    }
+    if (!password.has8OrMoreCharacters()) {
+      return 'Your password must be at least 8 characters long';
+    }
+
     return null;
   }
 }

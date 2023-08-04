@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordie/src/common/app_ecxceptions/exceptions.dart';
 import 'package:wordie/src/features/auth/data/repo/user_repo_iml.dart';
 import 'package:wordie/src/features/auth/domain/entity/user.dart';
 import 'package:wordie/src/features/auth/domain/repository/user_repo.dart';

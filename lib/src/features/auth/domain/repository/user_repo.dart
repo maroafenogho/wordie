@@ -1,4 +1,3 @@
-import 'package:wordie/src/common/app_ecxceptions/exceptions.dart';
 import 'package:wordie/src/features/auth/domain/entity/user.dart';
 
 abstract class UserRepository {
