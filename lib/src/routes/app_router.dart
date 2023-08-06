@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordie/src/features/auth/domain/usecases/usecases.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/current_user.dart';
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
@@ -13,7 +14,6 @@ import 'package:wordie/src/features/notes/presentation/screens/notes_dash.dart';
 import 'package:wordie/src/features/onboarding/presentation/screens/splashscreen.dart';
 import 'package:wordie/src/routes/scaffold_with_nav_bar.dart';
 
-import '../features/auth/data/repo/auth_repo.dart';
 import '../features/auth/presentation/controllers/auth_controller.dart';
 import '../features/notes/domain/user_note.dart';
 import '../features/notes/presentation/screens/add_note.dart';
@@ -36,12 +36,12 @@ enum AppRoute {
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
-  final authRepo = ref.watch(authRepoProvider);
+  final authUseCase = ref.watch(authUsecaseProvider);
   final currentUser = ref.watch(currentUserProvider);
   return GoRouter(
       initialLocation: '/splashscreen',
       navigatorKey: _rootNavigatorKey,
-      refreshListenable: GoRouterRefreshStream(authRepo.currentUser),
+      refreshListenable: GoRouterRefreshStream(authUseCase.executeGetUser()),
       redirect: (context, state) {
         log('PATH:: ${state.location}');
         final isLoggedIn = currentUser.value != null;

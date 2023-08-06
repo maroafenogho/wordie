@@ -8,7 +8,7 @@ import 'package:wordie/src/common/app_widgets/wordie_elevated_button.dart';
 import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
-import 'package:wordie/src/features/auth/presentation/controllers/login_cont.dart';
+import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/validation_controller.dart';
 import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
 import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';

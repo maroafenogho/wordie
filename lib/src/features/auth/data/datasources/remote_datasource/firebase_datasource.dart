@@ -48,15 +48,29 @@ class FirebaseDatasource implements AuthDatasource {
   }
 
   @override
-  Future<bool> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<bool> logout() async {
+    bool success = false;
+    try {
+      await _firebaseAuth.signOut();
+
+      success = true;
+    } catch (error) {
+      log(error.toString());
+    }
+    return success;
   }
 
   @override
-  Future<bool> resetPassword(String email) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
+  Future<bool> resetPassword(String email) async {
+    bool success = false;
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      success = true;
+    } catch (error) {
+      log(error.toString());
+      throw Exception(error);
+    }
+    return success;
   }
 
   @override
@@ -64,9 +78,19 @@ class FirebaseDatasource implements AuthDatasource {
       {required String email,
       required String password,
       required String firstName,
-      required String lastName}) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+      required String lastName}) async {
+    try {
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      await credential.user!.updateDisplayName('$firstName $lastName');
+
+      await credential.user!.sendEmailVerification();
+      return _userFromFirebase(credential.user);
+    } on auth.FirebaseAuthException catch (error) {
+      log(error.toString());
+      throw Exception(error);
+    }
   }
 }
 

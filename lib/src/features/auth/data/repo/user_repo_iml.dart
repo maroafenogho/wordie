@@ -26,8 +26,7 @@ class UserRepositoryImplementation implements UserRepository {
 
   @override
   Future<bool> resetPassword(String email) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
+    return _datasource.resetPassword(email);
   }
 
   @override

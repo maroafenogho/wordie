@@ -8,15 +8,31 @@ class AuthUsecase {
 
   AuthUsecase(this._userRepository);
 
+  Future<WordieUser?> executeSignUp(
+      {required String email,
+      required String password,
+      required String firstName,
+      required String lastName}) async {
+    return await _userRepository.signUp(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName);
+  }
+
   Future<WordieUser?> executeLogin(String email, String password) async {
     return await _userRepository.login(email, password);
+  }
+
+  Future<bool> executePasswordReset(String email) async {
+    return _userRepository.resetPassword(email);
   }
 
   Stream<WordieUser?> executeGetUser() {
     return _userRepository.getUser();
   }
 
-  Future<bool> executeLogout(String email, String password) async {
+  Future<bool> executeLogout() async {
     return await _userRepository.logout();
   }
 }

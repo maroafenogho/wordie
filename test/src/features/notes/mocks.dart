@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:wordie/src/features/auth/data/repo/auth_repo.dart';
 import 'package:wordie/src/features/auth/domain/entity/user.dart';
 import 'package:wordie/src/features/notes/data/datasources/remote/notes_service.dart';
 import 'package:wordie/src/features/notes/domain/user_note.dart';
@@ -33,5 +32,3 @@ class MockNote extends Mock implements Note {
   @override
   String get title => 'title';
 }
-
-class MockAuthRepository extends Mock implements AuthRepo {}
