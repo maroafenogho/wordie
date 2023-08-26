@@ -9,8 +9,8 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/sign_up_controller.dart';
-import 'package:wordie/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfields.dart';
+import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
 
 class SignUpScreen extends ConsumerWidget {
@@ -94,7 +94,7 @@ class SignUpScreen extends ConsumerWidget {
                         'User registration successful. Please check your email to verify your account',
                         context);
 
-                    context.go(LoginScreen.routeName);
+                    context.go(AppRoute.signIn.name);
                   }
                 } else {
                   showSnackbar('Please fill all text fields', context);
@@ -109,7 +109,7 @@ class SignUpScreen extends ConsumerWidget {
                   TextSpan(
                       text: 'Sign in',
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.goNamed(LoginScreen.routeName),
+                        ..onTap = () => context.goNamed(AppRoute.signIn.name),
                       style: WordieTypography.h6.copyWith(
                           color: const Color.fromARGB(255, 48, 167, 251)))
                 ])),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -41,21 +39,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
       initialLocation: '/splashscreen',
       navigatorKey: _rootNavigatorKey,
+      debugLogDiagnostics: true,
       refreshListenable: GoRouterRefreshStream(authUseCase.executeGetUser()),
-      redirect: (context, state) {
-        log('PATH:: ${state.location}');
-        final isLoggedIn = currentUser.value != null;
-        if (isLoggedIn) {
-          if (state.location.contains('signin')) {
-            return '/notes';
-          }
-        } else {
-          if (state.location.contains('account')) {
-            return '/signin';
-          }
-        }
-        return null;
-      },
       routes: [
         GoRoute(
           name: AppRoute.splashscreen.name,
@@ -70,7 +55,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ),
         GoRoute(
             name: AppRoute.signIn.name,
-            path: '/signin',
+            path: '/auth',
             builder: (context, state) => LoginScreen(),
             routes: [
               GoRoute(
@@ -92,9 +77,21 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                   key: state.pageKey,
                   child: const NotesHome(),
                 ),
+                redirect: (context, state) {
+                  final isLoggedIn = currentUser.value != null;
+                  if (isLoggedIn) {
+                    if (state.location.contains('signin')) {
+                      return '/notes';
+                    }
+                  } else {
+                    return '/auth';
+                  }
+                  return null;
+                },
                 routes: [
                   GoRoute(
                     path: 'addnote',
+                    parentNavigatorKey: _rootNavigatorKey,
                     name: AppRoute.addNote.name,
                     builder: (context, state) => const AddNewNote(),
                   ),

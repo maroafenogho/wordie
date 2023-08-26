@@ -9,8 +9,8 @@ import 'package:wordie/src/common/constants.dart';
 import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/forgot_password_controller.dart';
-import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/email_field.dart';
+import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
 
 class ResetPasswordScreen extends ConsumerWidget {
@@ -108,7 +108,7 @@ class ResetPasswordScreen extends ConsumerWidget {
                   TextSpan(
                       text: 'Sign up',
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.goNamed(SignUpScreen.routeName),
+                        ..onTap = () => context.goNamed(AppRoute.signUp.name),
                       style: WordieTypography.h6.copyWith(
                           color: const Color.fromARGB(255, 48, 167, 251)))
                 ])),

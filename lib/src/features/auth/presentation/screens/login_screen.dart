@@ -10,16 +10,12 @@ import 'package:wordie/src/common/typography.dart';
 import 'package:wordie/src/extensions/extensions.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/login_controller.dart';
 import 'package:wordie/src/features/auth/presentation/controllers/validation_controller.dart';
-import 'package:wordie/src/features/auth/presentation/screens/forgot_password.dart';
-import 'package:wordie/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:wordie/src/features/auth/presentation/screens/widgets/formfields.dart';
 import 'package:wordie/src/routes/app_router.dart';
 import 'package:wordie/src/utils/utils.dart';
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
-
-  static const routeName = '/login_screen';
 
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -116,7 +112,7 @@ class LoginScreen extends ConsumerWidget {
                           text: 'Reset',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () =>
-                                context.goNamed(ResetPasswordScreen.routeName),
+                                context.goNamed(AppRoute.resetPassword.name),
                           style: WordieTypography.h6.copyWith(
                               color: const Color.fromARGB(255, 48, 167, 251)))
                     ]),
@@ -131,7 +127,7 @@ class LoginScreen extends ConsumerWidget {
                           text: 'Sign up',
                           recognizer: TapGestureRecognizer()
                             ..onTap =
-                                () => context.goNamed(SignUpScreen.routeName),
+                                () => context.goNamed(AppRoute.signUp.name),
                           style: WordieTypography.h6.copyWith(
                               color: const Color.fromARGB(255, 48, 167, 251)))
                     ]),

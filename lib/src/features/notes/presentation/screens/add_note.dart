@@ -30,18 +30,7 @@ class _AddNewNoteState extends State<AddNewNote> {
             backgroundColor: WordieConstants.backgroundColor,
             leading: InkWell(
               onTap: () async {
-                if (bodyController.text.isNotEmpty) {
-                  final success = await ref
-                      .watch(asyncAddNoteProvider.notifier)
-                      .createNote(
-                          noteTitle: titleController.text.trim(),
-                          noteBody: bodyController.text.trim());
-                  if (success) {
-                    context.pop();
-                  }
-                } else {
-                  context.pop();
-                }
+                context.pop();
               },
               child: const Icon(Icons.arrow_back_ios_new),
             ),
@@ -98,35 +87,31 @@ class _AddNewNoteState extends State<AddNewNote> {
               child: Column(
                 children: [
                   30.0.vSpace,
-                  Expanded(
-                    flex: 1,
-                    child: TextField(
-                      controller: titleController,
-                      style: WordieTypography.h1,
-                      onChanged: (value) {
-                        if (value.isNotEmpty ||
-                            bodyController.text.isNotEmpty) {
-                          if (!showSaveButton) {
-                            setState(() {
-                              showSaveButton = true;
-                            });
-                          }
-                        } else {
-                          if (showSaveButton) {
-                            setState(() {
-                              showSaveButton = false;
-                            });
-                          }
+                  TextField(
+                    maxLines: 2,
+                    controller: titleController,
+                    style: WordieTypography.h1,
+                    onChanged: (value) {
+                      if (value.isNotEmpty || bodyController.text.isNotEmpty) {
+                        if (!showSaveButton) {
+                          setState(() {
+                            showSaveButton = true;
+                          });
                         }
-                      },
-                      keyboardType: TextInputType.name,
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: const InputDecoration(hintText: 'Note Title'),
-                    ),
+                      } else {
+                        if (showSaveButton) {
+                          setState(() {
+                            showSaveButton = false;
+                          });
+                        }
+                      }
+                    },
+                    keyboardType: TextInputType.name,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: const InputDecoration(hintText: 'Note Title'),
                   ),
                   10.0.vSpace,
                   Expanded(
-                    flex: 9,
                     child: TextField(
                       controller: bodyController,
                       keyboardType: TextInputType.multiline,
